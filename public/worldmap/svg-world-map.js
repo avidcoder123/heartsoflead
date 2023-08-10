@@ -78,7 +78,7 @@ var svgWorldMap = (function() {
 
     // Main function: SVG map init call, options handling, return the map object
     async function svgWorldMap(initOptions, initCountryData, initTimeData) {
-        tableData = countryData
+        tableData = initCountryData
         let promise1 = new Promise(resolve1 => {
             // Check size, viewport and mobile
             checkSize();
