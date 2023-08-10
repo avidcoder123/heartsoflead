@@ -75,9 +75,10 @@ var svgWorldMap = (function() {
         timePause: true, // Set to 'false' for time animation autostart
         timeLoop: false //  Set to 'true' for time animation loop
     };
-    
+
     // Main function: SVG map init call, options handling, return the map object
     async function svgWorldMap(initOptions, initCountryData, initTimeData) {
+        tableData = countryData
         let promise1 = new Promise(resolve1 => {
             // Check size, viewport and mobile
             checkSize();
