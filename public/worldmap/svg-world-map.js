@@ -10,7 +10,7 @@
  **/
 
 var svgWorldMap = (function() { 
-
+    console.log("Making map")
     // Global variables
     var svg;
     var baseNode;
