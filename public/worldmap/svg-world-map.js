@@ -31,45 +31,51 @@ var svgWorldMap = (function() {
 
     // Default options
     var options = {
+
         // Base path 
-        libPath: '../src/', // Point to library folder, e.g. (http[s]:)//myserver.com/map/src/
+        libPath: '../worldmap/', // Point to library folder, e.g. (http[s]:)//myserver.com/map/src/
+
         // Basic options
-        bigMap: true, // Set to 'false' to load small map without provinces
+        bigMap: false, // Set to 'false' to load small map without provinces
         showOcean: true, // Show or hide ocean layer
-        showAntarctica: true, // Show or hide antarctic layer
-        showLabels: true, // Show country labels
-        showMicroLabels: false, // Show microstate labels
+        showAntarctica: false, // Show or hide antarctic layer
+        showLabels: false, // Show country labels
+        showMicroLabels: true, // Show microstate labels
         showMicroStates: true, // Show microstates on map
-        showInfoBox: false, // Show info box
+        showInfoBox: true, // Show info box
         backgroundImage: '', // Background image path
+
         // Color options
         oceanColor: '#D8EBFF', 
         worldColor: '#FFFFFF', 
         labelFill: { out: '#666666',  over: '#333333',  click: '#000000' }, 
-        //countryFill: { out: '#B9B9B9',  over: '#CCCCCC',  click: '#666666' }, // TODO: Currently this makes no sense for main country groups, until all country borders are existing in the SVG (a lot are missing, e.g. Japan, Greenland, Antarctica)
         countryStroke: { out: '#FFFFFF',  over: '#FFFFFF',  click: '#333333' }, 
         countryStrokeWidth: { out: '0.5',  over: '1',  click: '1' }, 
         provinceFill: { out: '#B9B9B9',  over: '#FFFFFF',  click: '#666666' }, 
         provinceStroke: { out: '#FFFFFF',  over: '#FFFFFF',  click: '#666666' }, 
         provinceStrokeWidth: { out: '0.1',  over: '0.5',  click: '0.5' }, 
+
         // Group options
         groupCountries: true, // Enable or disable country grouping
         groupBy: [ "region" ], // Sort countryData by this value(s) and return to countryGroups
+        
         // Coordinates
         trackCoords: false, // Track map coords, default 'false' due to performance
+
         // Callback functions from the map to the outside, can have custom names
         mapOut: "mapOut", 
         mapOver: "mapOver", 
         mapClick: "mapClick", 
         mapCoords: "mapCoords", 
-        mapDate: "mapDate", // (Custom) callback function for time control date return
         mapTable: "mapTable", // (Custom) callback function for HTML data parsing
+        mapDate: "mapDate", // (Custom) callback function for time control date return
+
         // Time controls
         timeControls: false, // Set to 'true' for time controls
         timePause: true, // Set to 'false' for time animation autostart
         timeLoop: false //  Set to 'true' for time animation loop
     };
-
+    
     // Main function: SVG map init call, options handling, return the map object
     async function svgWorldMap(initOptions, initCountryData, initTimeData) {
         let promise1 = new Promise(resolve1 => {
