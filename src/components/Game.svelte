@@ -18,12 +18,24 @@
         return map
     }
 
+    let countryID = undefined;
+
+    window.mapClick = path => {
+        countryID = path.country.id
+
+        if (countryID === "Ocean" || countryID === "World") {
+            countryID = undefined
+        }
+    }
+
     async function main() {
         let map = await bootstrap()
-        console.log(map)
         console.log("Bootstrapped map")
-        console.log(window["updateMapData"])
-        console.log(map.update({US: "#000000"}))
+        map.update({US: "#200ac4"})
     }
     main().then(() => console.log("Finished"))
 </script>
+
+{#if countryID != undefined}
+    <div class="w-screen h-36 bg-slate-600 fixed bottom-0 z-50"></div>
+{/if}
