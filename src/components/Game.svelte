@@ -14,12 +14,15 @@
             };
         }
 
-        return await svgWorldMap(options, newdata);
+        let map = await svgWorldMap(options, newdata);
+        return map
     }
 
     async function main() {
         let map = await bootstrap()
-        map.update({DE: "#000000"})
+        console.log(map)
+        console.log("Bootstrapped map")
+        map.update({US: "#000000"})
     }
     main().then(() => console.log("Finished"))
 </script>
