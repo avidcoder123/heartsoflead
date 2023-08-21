@@ -607,6 +607,7 @@ var svgWorldMap = (function() {
             } else {
                 var country = findProvinceById(id);
             }
+            console.log(country)
             if (country != undefined) {
                 if (country.provinces == undefined) { // Is mostly a province and no country. TODO: Rename variables? 
                     country.updateColor = updateData[id];

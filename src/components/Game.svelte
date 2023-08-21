@@ -1,5 +1,5 @@
 <script>
-    import "../lib/svg-world-map";
+    //import "../lib/svg-world-map";
     import { options } from "../lib/options";
 
     async function bootstrap() {
@@ -22,7 +22,8 @@
         let map = await bootstrap()
         console.log(map)
         console.log("Bootstrapped map")
-        map.update({US: "#000000"})
+        console.log(window["updateMapData"])
+        console.log(map.update({US: "#000000"}))
     }
     main().then(() => console.log("Finished"))
 </script>
