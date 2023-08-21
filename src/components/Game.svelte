@@ -1,11 +1,12 @@
 <script>
     //import "../lib/svg-world-map";
     import { options } from "../lib/options";
+    let data = {}
 
     async function bootstrap() {
         let res = await fetch("/worldmap/country-data.json");
         console.log(res);
-        let data = await res.json();
+        data = await res.json();
         let newdata = {};
         for (let key in data) {
             newdata[key] = {
@@ -37,5 +38,11 @@
 </script>
 
 {#if countryID != undefined}
-    <div class="w-screen h-36 bg-slate-600 fixed bottom-0 z-50"></div>
+    <div class="w-screen h-36 bg-slate-600 fixed bottom-0 z-50 p-10">
+        <h1 class="text-white justify-center text-xl ">
+            {data[countryID].longname}
+            <br>
+            Population: {data[countryID].population.toLocaleString()}
+        </h1>
+    </div>
 {/if}
