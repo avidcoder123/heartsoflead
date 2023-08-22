@@ -1,8 +1,8 @@
 <script>
     //import "../lib/svg-world-map";
     import { options } from "../lib/options";
+    import  {mapData } from "../lib/country-data"
     import { mapBorders } from "../lib/borders"
-    import { mapData } from "../lib/country-data"
     import { formatNumber } from "../lib/util";
 
     let data = {}
