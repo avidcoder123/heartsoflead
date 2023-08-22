@@ -14,8 +14,32 @@
         data = mapData
 
         let map = await svgWorldMap(options, data);
-        document.querySelector("div#svg-world-map-container").style.width = "80%"
+        let mapContainer = document.querySelector("div#svg-world-map-container")
+        mapContainer.style.width = "80%"
         zoom = svgPanZoom(map.worldMap)
+        window.addEventListener("keydown", e => {
+            const panSpeed = 20
+            switch (e.key) {
+                case ".":
+                    zoom.zoomBy(1.1)
+                    break
+                case ",":
+                    zoom.zoomBy(0.9)
+                    break
+                case "w":
+                    zoom.panBy({y: panSpeed, x: 0})
+                    break
+                case "s":
+                    zoom.panBy({y: -panSpeed, x: 0})
+                    break
+                case "a":
+                    zoom.panBy({y: 0, x: panSpeed})
+                    break
+                case "d":
+                    zoom.panBy({y: 0, x: -panSpeed})
+                    break
+            }
+        })
         return map
     }
 
@@ -50,9 +74,13 @@
         {/if}
     </h1>
 </div>
-<div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-50 p-10">
+<div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-50 p-10 flex flex-col">
     <h1 class="text-white justify-center text-xl ">
         Side Dashboard
-        TODO: add zoom buttons and pan keyboard shortcuts wasd
+    </h1>
+    <h1 class="text-white text-lg mt-auto mb-5">
+        Use WASD or drag mouse to pan the map.
+        <br><br>
+        Use , and . or the scroll wheel to zoom in/out.
     </h1>
 </div>

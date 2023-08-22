@@ -148,7 +148,6 @@ export const mapBorders = {
   "SI": ["AT", "HR", "HU", "IT"],
   "SB": [],
   "SO": ["DJ", "ET", "KE"],
-  "ZA": ["BW", "LS", "MZ", "NA", "SZ", "ZW"],
   "SS": ["CD", "CF", "ET", "KE", "SD", "UG"],
   "ES": ["AD", "FR", "GI", "PT"],
   "LK": ["IN"],
