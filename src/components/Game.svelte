@@ -20,10 +20,10 @@
         window.addEventListener("keydown", e => {
             const panSpeed = 20
             switch (e.key) {
-                case ".":
+                case "=":
                     zoom.zoomBy(1.1)
                     break
-                case ",":
+                case "-":
                     zoom.zoomBy(0.9)
                     break
                 case "w":
@@ -81,6 +81,6 @@
     <h1 class="text-white text-lg mt-auto mb-5">
         Use WASD or drag mouse to pan the map.
         <br><br>
-        Use , and . or the scroll wheel to zoom in/out.
+        Use - and = or the scroll wheel to zoom in/out.
     </h1>
 </div>
