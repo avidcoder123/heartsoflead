@@ -12,6 +12,8 @@
         data = mapData
 
         let map = await svgWorldMap(options, data);
+        document.querySelector("div#svg-world-map-container").style.width = "80%"
+        svgPanZoom('#svg-world-map-container')
         return map
     }
 
@@ -27,7 +29,6 @@
 
     async function main() {
         let map = await bootstrap()
-        document.querySelector("div#svg-world-map-container").style.width = "80%"
         console.log("Bootstrapped map")
         map.update({US: "#200ac4", CA: "#200ac4", MX: "#200ac4"})
     }
@@ -42,6 +43,8 @@
             Population: {formatNumber(data[countryID].population)}
         {:else}
             The World
+            <br>
+            Population: {formatNumber(data["World"].population)}
         {/if}
     </h1>
 </div>
