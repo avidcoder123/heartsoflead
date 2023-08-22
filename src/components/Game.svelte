@@ -1,12 +1,16 @@
 <script>
     //import "../lib/svg-world-map";
     import { options } from "../lib/options";
+    import { mapBorders } from "../lib/borders"
+    import { mapData } from "../lib/country-data"
+    import { formatNumber } from "../lib/util";
+
     let data = {}
 
+
     async function bootstrap() {
-        let res = await fetch("/worldmap/country-data.json");
-        console.log(res);
-        data = await res.json();
+        console.log(mapData)
+        data = mapData
         let newdata = {};
         for (let key in data) {
             newdata[key] = {
@@ -41,9 +45,9 @@
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-50 p-10">
     <h1 class="text-white justify-center text-xl ">
         {#if countryID != undefined}
-            {data[countryID].longname}
+            {data[countryID].longname} ({data[countryID].name})
             <br>
-            Population: {data[countryID].population.toLocaleString()}
+            Population: {formatNumber(data[countryID].population)}
         {:else}
             The World
         {/if}
