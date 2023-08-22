@@ -4,6 +4,7 @@
     import  {mapData } from "../lib/country-data"
     import { mapBorders } from "../lib/borders"
     import { formatNumber } from "../lib/util";
+    import Menu from "./Menu.svelte";
 
     let data = {}
 
@@ -61,18 +62,22 @@
     main().then(() => console.log("Finished"))
 </script>
 
-<div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-50 p-10">
-    <h1 class="text-white justify-center text-xl ">
+<div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-50 p-10 flex flex-row gap-5">
+
         {#if countryID != undefined}
-            {data[countryID].longname} ({data[countryID].name})
-            <br>
-            Population: {formatNumber(data[countryID].population)}
+            <h1 class="text-white justify-center text-xl ">
+                {data[countryID].longname} ({data[countryID].name})
+                <br>
+                Population: {formatNumber(data[countryID].population)}
+            </h1>
+            <Menu {countryID} />
         {:else}
-            The World
-            <br>
-            Population: {formatNumber(data["World"].population)}
+            <h1 class="text-white justify-center text-xl ">
+                The World
+                <br>
+                Population: {formatNumber(data["World"].population)}
+            </h1>
         {/if}
-    </h1>
 </div>
 <div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-50 p-10 flex flex-col">
     <h1 class="text-white justify-center text-xl ">
