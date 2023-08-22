@@ -31,18 +31,26 @@
 
     async function main() {
         let map = await bootstrap()
+        document.querySelector("div#svg-world-map-container").style.width = "80%"
         console.log("Bootstrapped map")
         map.update({US: "#200ac4"})
     }
     main().then(() => console.log("Finished"))
 </script>
 
-{#if countryID != undefined}
-    <div class="w-screen h-36 bg-slate-600 fixed bottom-0 z-50 p-10">
-        <h1 class="text-white justify-center text-xl ">
+<div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-50 p-10">
+    <h1 class="text-white justify-center text-xl ">
+        {#if countryID != undefined}
             {data[countryID].longname}
             <br>
             Population: {data[countryID].population.toLocaleString()}
-        </h1>
-    </div>
-{/if}
+        {:else}
+            The World
+        {/if}
+    </h1>
+</div>
+<div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-50 p-10">
+    <h1 class="text-white justify-center text-xl ">
+        Side Dashboard
+    </h1>
+</div>
