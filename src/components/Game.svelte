@@ -13,7 +13,7 @@
 
         let map = await svgWorldMap(options, data);
         document.querySelector("div#svg-world-map-container").style.width = "80%"
-        svgPanZoom('#svg-world-map-container')
+        svgPanZoom(map.worldMap)
         return map
     }
 
