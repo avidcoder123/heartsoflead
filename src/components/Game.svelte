@@ -62,7 +62,7 @@
     main().then(() => console.log("Finished"))
 </script>
 
-<div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-50 p-10 flex flex-row gap-5">
+<div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">
 
         {#if countryID != undefined}
             <h1 class="text-white justify-center text-xl ">
