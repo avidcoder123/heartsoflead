@@ -53,5 +53,6 @@
 <div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-50 p-10">
     <h1 class="text-white justify-center text-xl ">
         Side Dashboard
+        TODO: add zoom buttons and pan keyboard shortcuts wasd
     </h1>
 </div>
