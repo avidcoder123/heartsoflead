@@ -9,17 +9,9 @@
 
 
     async function bootstrap() {
-        console.log(mapData)
         data = mapData
-        let newdata = {};
-        for (let key in data) {
-            newdata[key] = {
-                name: data[key].name,
-                population: data[key].population,
-            };
-        }
 
-        let map = await svgWorldMap(options, newdata);
+        let map = await svgWorldMap(options, data);
         return map
     }
 
