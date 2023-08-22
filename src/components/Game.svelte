@@ -33,7 +33,7 @@
         let map = await bootstrap()
         document.querySelector("div#svg-world-map-container").style.width = "80%"
         console.log("Bootstrapped map")
-        map.update({US: "#200ac4"})
+        map.update({US: "#200ac4", CA: "#200ac4", MX: "#200ac4"})
     }
     main().then(() => console.log("Finished"))
 </script>
