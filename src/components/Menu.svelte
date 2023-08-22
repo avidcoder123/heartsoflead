@@ -1,5 +1,7 @@
 <script lang="ts">
-    let countryID: string = ""
+    import Modal from "./Modal.svelte";
+
+    export let countryID: string = ""
     enum Page {
         Home,
         Military
@@ -13,9 +15,8 @@
             Military
         </button>
     {:else if currentPage == Page.Military}
-        <div class="w-screen h-screen bg-black opacity-50 z-40 fixed top-0 left-0"></div>
-            <div class="w-96 h-96 bg-white rounded-xl z-50 opacity-100 fixed top-[50%] left-[50%]" style="transform: translate(-50%, -50%);">
-                <h1>Among us haiwan</h1>
-            </div>
+        <Modal cancelFn={()=>{currentPage=Page.Home}}>
+
+        </Modal>
     {/if}
 </div>
