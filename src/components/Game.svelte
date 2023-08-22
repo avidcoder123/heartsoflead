@@ -7,13 +7,15 @@
 
     let data = {}
 
+    let zoom = undefined
+
 
     async function bootstrap() {
         data = mapData
 
         let map = await svgWorldMap(options, data);
         document.querySelector("div#svg-world-map-container").style.width = "80%"
-        svgPanZoom(map.worldMap)
+        zoom = svgPanZoom(map.worldMap)
         return map
     }
 
