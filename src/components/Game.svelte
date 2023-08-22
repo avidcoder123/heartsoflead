@@ -1,12 +1,14 @@
 <script>
     //import "../lib/svg-world-map";
     import { options } from "../lib/options";
+    import * as borders from "../lib/borders"
+    import  {mapData } from "../lib/country-data"
     let data = {}
 
+
     async function bootstrap() {
-        let res = await fetch("/worldmap/country-data.json");
-        console.log(res);
-        data = await res.json();
+        console.log(mapData)
+        data = mapData
         let newdata = {};
         for (let key in data) {
             newdata[key] = {

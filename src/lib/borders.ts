@@ -1,5 +1,5 @@
-{
-"AF": ["IR", "PK", "TM", "UZ", "TJ", "CN"],
+export const mapBorders = {
+  "AF": ["IR", "PK", "TM", "UZ", "TJ", "CN"],
   "AL": ["ME", "MK", "GR", "XK"],
   "DZ": ["NE", "LY", "MR", "ML", "TN", "EH", "MA"],
   "AD": ["FR", "ES"],
