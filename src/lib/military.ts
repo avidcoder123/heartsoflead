@@ -1,3 +1,4 @@
+
 const divisionSize = 1000 //1000 people in a single division
 
 export let MilitaryController = {
@@ -11,6 +12,10 @@ export let MilitaryController = {
     train(country:string, divisions: number) {
         const currentDivisions = this.trainingQueue.get(country) || 0
         this.trainingQueue.set(country, currentDivisions + divisions)
+    },
+
+    getDivisions(country: string) {
+        return this.reserveArmies.get(country) || 0
     },
 
     //Process to run every second to train divisions
