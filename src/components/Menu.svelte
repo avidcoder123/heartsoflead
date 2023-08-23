@@ -16,7 +16,7 @@
         </button>
     {:else if currentPage == Page.Military}
         <Modal cancelFn={()=>{currentPage=Page.Home}}>
-
+            
         </Modal>
     {/if}
 </div>

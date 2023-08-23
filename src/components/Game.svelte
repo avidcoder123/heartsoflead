@@ -79,7 +79,7 @@
             </h1>
         {/if}
 </div>
-<div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-50 p-10 flex flex-col">
+<div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-30 p-10 flex flex-col">
     <h1 class="text-white justify-center text-xl ">
         Side Dashboard
     </h1>
