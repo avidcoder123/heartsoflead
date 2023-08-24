@@ -21,7 +21,7 @@
     {:else if currentPage == Page.Military}
         <Modal cancelFn={()=>{currentPage=Page.Home}}>
             <h1 class="text-xl">Train divisions</h1>
-            <input type="range" class="w-64 h-12" bind:value={toTrain} min=0 max={maxTrain} />
+            <input class="w-64 h-12 p-1 rounded-md" type="number" min={0} max={maxTrain} bind:value={toTrain}/>
             <h1 class="text-lg">{toTrain.toLocaleString()}/max {maxTrain.toLocaleString()} divisions ({(toTrain * 1000).toLocaleString()} population used)</h1>
         </Modal>
     {/if}

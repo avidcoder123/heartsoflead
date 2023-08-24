@@ -159,7 +159,6 @@ export const mapBorders = {
   "TJ": ["AF", "CN", "KG", "UZ"],
   "TZ": ["BI", "CD", "KE", "MW", "MZ", "RW", "UG", "ZM"],
   "TH": ["KH", "LA", "MM", "MY"],
-  "TL": ["ID"],
   "TG": ["BJ", "BF", "GH"],
   "TO": [],
   "TT": [],
