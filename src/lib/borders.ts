@@ -1,3 +1,6 @@
+export function getMapBorders(cid: string) {
+  return mapBorders[<keyof typeof mapBorders>cid]
+}
 
 export const mapBorders = {
   "AF": ["IR", "PK", "TM", "UZ", "TJ", "CN"],

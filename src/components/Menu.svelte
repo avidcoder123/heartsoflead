@@ -2,10 +2,10 @@
     import Modal from "./Modal.svelte";
     import { MilitaryController } from "../lib/military";
     import { PopulationController } from "../lib/population"
-    import { mapBorders } from "../lib/borders";
+    import { getMapBorders } from "../lib/borders";
     import { getMapData } from "../lib/country-data";
 
-    export let countryID: keyof typeof mapBorders = "AF"
+    export let countryID = ""
     enum Page {
         Home,
         Military
@@ -45,7 +45,7 @@
                 <h1 class="text-xl">Attack</h1>
                 <select>
                     <option value="">Select A Country</option>
-                    {#each mapBorders[countryID] as country}
+                    {#each getMapBorders(countryID) as country}
                         <option value={country}>{getMapData(country).name}</option>
                     {/each}
                 </select>
