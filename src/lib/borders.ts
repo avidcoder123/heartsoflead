@@ -1,3 +1,4 @@
+
 export const mapBorders = {
   "AF": ["IR", "PK", "TM", "UZ", "TJ", "CN"],
   "AL": ["ME", "MK", "GR", "XK"],

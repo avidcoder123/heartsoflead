@@ -1,3 +1,7 @@
+export function getMapData(cid: string) {
+	return mapData[<keyof typeof mapData>cid]
+}
+
 export const mapData = {
 	"World": {
 		"name": "Earth",

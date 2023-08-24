@@ -2,8 +2,10 @@
     import Modal from "./Modal.svelte";
     import { MilitaryController } from "../lib/military";
     import { PopulationController } from "../lib/population"
+    import { mapBorders } from "../lib/borders";
+    import { getMapData } from "../lib/country-data";
 
-    export let countryID: string = ""
+    export let countryID: keyof typeof mapBorders = "AF"
     enum Page {
         Home,
         Military
@@ -28,9 +30,26 @@
         </button>
     {:else if currentPage == Page.Military}
         <Modal cancelFn={()=>{currentPage=Page.Home}}>
-            <h1 class="text-xl">Train divisions</h1>
-            <input class="w-64 h-12 p-1 rounded-md" type="number" min={0} max={maxTrain} bind:value={toTrain} on:input={() => validateDivisions()}/>
-            <h1 class="text-lg">{(toTrain || 0).toLocaleString()}/max {maxTrain.toLocaleString()} divisions ({((toTrain || 0) * 1000).toLocaleString()} population used)</h1>
+            <div class="flex flex-col gap-5">
+                <h1 class="text-xl">Train divisions</h1>
+                <input class="w-64 h-12 p-1 rounded-md" type="number" max={maxTrain} bind:value={toTrain} on:input={() => validateDivisions()}/>
+                <h1 class="text-lg">{(toTrain || 0).toLocaleString()}/max {maxTrain.toLocaleString()} divisions <br> ({((toTrain || 0) * 1000).toLocaleString()} population used)</h1>
+                <button class="w-48 h-16 text-xl rounded-lg text-white bg-green-500" on:click={() => {
+                    MilitaryController.train(countryID, toTrain);
+                    toTrain = 0
+                }}>
+                    Queue Training
+                </button>
+            </div>
+            <div>
+                <h1 class="text-xl">Attack</h1>
+                <select>
+                    <option value="">Select A Country</option>
+                    {#each mapBorders[countryID] as country}
+                        <option value={country}>{getMapData(country).name}</option>
+                    {/each}
+                </select>
+            </div>
         </Modal>
     {/if}
 </div>

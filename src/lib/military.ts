@@ -9,28 +9,38 @@ export let MilitaryController = {
     trainingRate: 1, //How many divisions to train per second
 
     //Queue up divisions to be trained
-    train(country:string, divisions: number) {
-        const currentDivisions = this.trainingQueue.get(country) || 0
-        this.trainingQueue.set(country, currentDivisions + divisions)
+    train: (country:string, divisions: number) => {
+        const currentDivisions = MilitaryController.trainingQueue.get(country) || 0
+        MilitaryController.trainingQueue.set(country, currentDivisions + divisions)
     },
 
-    getDivisions(country: string) {
-        return this.reserveArmies.get(country) || 0
+    getDivisions: (country: string) => {
+        return MilitaryController.reserveArmies.get(country) || 0
     },
 
     //Process to run every second to train divisions
-    trainTick() {
-        for(const cid in this.trainingQueue.keys()) {
-            //Remove 1 division in trianing queue and add it to trained divisions.
-            let toTrain = this.trainingQueue.get(cid) || 0
-            this.trainingQueue.set(cid, toTrain - this.trainingRate)
-            let current = this.reserveArmies.get(cid) || 0
-            this.reserveArmies.set(cid, current + this.trainingRate)
-
-            if(current - 1 == 0) {
-                this.trainingQueue.delete(cid)
+    trainTick: () => {
+        MilitaryController.trainingQueue.forEach((value, cid) => {
+            let toTrain = value || 0
+            MilitaryController.trainingQueue.set(cid, toTrain - MilitaryController.trainingRate)
+            let current = MilitaryController.reserveArmies.get(cid) || 0
+            MilitaryController.reserveArmies.set(cid, current + MilitaryController.trainingRate)
+            if(toTrain - 1 == 0) {
+                MilitaryController.trainingQueue.delete(cid)
             }
-        }
+        })
+
+        // for(let cid in MilitaryController.trainingQueue) {
+        //     //Remove 1 division in trianing queue and add it to trained divisions.
+        //     let toTrain = MilitaryController.trainingQueue.get(cid) || 0
+        //     MilitaryController.trainingQueue.set(cid, toTrain - MilitaryController.trainingRate)
+        //     let current = MilitaryController.reserveArmies.get(cid) || 0
+        //     MilitaryController.reserveArmies.set(cid, current + MilitaryController.trainingRate)
+
+        //     if(current - 1 == 0) {
+        //         MilitaryController.trainingQueue.delete(cid)
+        //     }
+        // }
     }
 }
 

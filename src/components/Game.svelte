@@ -5,6 +5,7 @@
     import { mapBorders } from "../lib/borders"
     import { formatNumber } from "../lib/util";
     import Menu from "./Menu.svelte";
+    import { MilitaryController } from "../lib/military";
 
     let data = {}
 
@@ -59,7 +60,14 @@
         console.log("Bootstrapped map")
         map.update({US: "#200ac4", CA: "#200ac4", MX: "#200ac4"})
     }
+
     main().then(() => console.log("Finished"))
+
+    //How many reserve divisions
+    let resDivs = ""
+    setInterval(() => {
+        resDivs = formatNumber(MilitaryController.getDivisions(countryID))
+    }, 100)
 </script>
 
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">
@@ -69,6 +77,8 @@
                 {data[countryID].longname} ({data[countryID].name})
                 <br>
                 Population: {formatNumber(data[countryID].population)}
+                <br>
+                Reserve Divisions: {resDivs}
             </h1>
             <Menu {countryID} />
         {:else}
