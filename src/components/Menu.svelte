@@ -14,6 +14,7 @@
     let currentPage = Page.Home
     let toTrain = 0
     let maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000) - MilitaryController.getDivisions(countryID))
+    let toAttack = ""
 
     function validateDivisions() {
         if(toTrain < 0) {
@@ -43,12 +44,13 @@
             </div>
             <div>
                 <h1 class="text-xl">Attack</h1>
-                <select>
+                <select class="w-48 h-12 bg-white rounded-md" bind:value={toAttack}>
                     <option value="">Select A Country</option>
                     {#each getMapBorders(countryID) as country}
                         <option value={country}>{getMapData(country).name}</option>
                     {/each}
                 </select>
+                {toAttack}
             </div>
         </Modal>
     {/if}
