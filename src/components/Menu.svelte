@@ -42,7 +42,7 @@
                     Queue Training
                 </button>
             </div>
-            <div>
+            <div class="flex flex-col gap-5">
                 <h1 class="text-xl">Attack</h1>
                 <select class="w-48 h-12 bg-white rounded-md" bind:value={toAttack}>
                     <option value="">Select A Country</option>
@@ -50,7 +50,8 @@
                         <option value={country}>{getMapData(country).name}</option>
                     {/each}
                 </select>
-                {toAttack}
+                <h1 class="text-lg">Deploy Divisions (Max {MilitaryController.getDivisions(countryID)})</h1>
+                <input class="w-64 h-12 p-1 rounded-md" type="number" max={MilitaryController.getDivisions(countryID)}/>
             </div>
         </Modal>
     {/if}
