@@ -7,7 +7,7 @@ export let MilitaryController = {
     reserveArmies: new Map<string, number>(),
     //The queued divisions which still need to be trained
     trainingQueue: new Map<string, number>(),
-    trainingRate: 1, //How many divisions to train per second
+    trainingRate: 100, //How many divisions to train per second
 
     //Queue up divisions to be trained
     train: (country:string, divisions: number) => {
