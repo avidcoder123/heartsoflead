@@ -1,3 +1,4 @@
+import { getMapData, getMapKeys } from "./country-data"
 
 const divisionSize = 1000 //1000 people in a single division
 
@@ -43,6 +44,10 @@ export let MilitaryController = {
         // }
     }
 }
+
+getMapKeys().map(key => {
+    MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
+})
 
 //Train divisions ever second
 setInterval(MilitaryController.trainTick, 1000)
