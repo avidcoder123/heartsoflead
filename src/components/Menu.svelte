@@ -15,6 +15,7 @@
     let toTrain = 0
     let maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000) - MilitaryController.getDivisions(countryID))
     let toAttack = ""
+    let attackArmies = 0
 
     function validateDivisions() {
         if(toTrain < 0) {
@@ -22,6 +23,20 @@
         } else if (toTrain > maxTrain) {
             toTrain = maxTrain
         }
+    }
+
+    function validateAttack() {
+        if(attackArmies < 0) {
+            attackArmies = 0
+        } else if(attackArmies > MilitaryController.getDivisions(countryID)) {
+            attackArmies = MilitaryController.getDivisions(countryID)
+        }
+    }
+
+    function launchAttack() {
+        MilitaryController.deployDivisions(countryID, toAttack, attackArmies)
+        toAttack = ""
+        attackArmies = 0
     }
 </script>
 <div class="flex flex-row gap-5">
@@ -51,7 +66,10 @@
                     {/each}
                 </select>
                 <h1 class="text-lg">Deploy Divisions (Max {MilitaryController.getDivisions(countryID)})</h1>
-                <input class="w-64 h-12 p-1 rounded-md" type="number" max={MilitaryController.getDivisions(countryID)}/>
+                <input class="w-64 h-12 p-1 rounded-md" type="number" max={MilitaryController.getDivisions(countryID)} bind:value={attackArmies} on:input={() => validateAttack()}/>
+                <button class="w-36 h-14 text-xl rounded-lg text-white bg-orange-500" on:click={() => launchAttack()}>
+                    Attack!
+                </button>
             </div>
         </Modal>
     {/if}

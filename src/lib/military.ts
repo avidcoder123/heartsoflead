@@ -21,6 +21,12 @@ export let MilitaryController = {
         return MilitaryController.reserveArmies.get(country) || 0
     },
 
+    deployDivisions(attacker: string, defendant: string, divisions: number) {
+        let currentReserve = MilitaryController.reserveArmies.get(attacker) || 0
+        MilitaryController.reserveArmies.set(attacker, currentReserve - divisions)
+        MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions)
+    },
+
     //Process to run every second to train divisions
     trainTick: () => {
         MilitaryController.trainingQueue.forEach((value, cid) => {
