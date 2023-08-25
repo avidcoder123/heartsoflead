@@ -5,6 +5,8 @@ const divisionSize = 1000 //1000 people in a single division
 export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
     reserveArmies: new Map<string, number>(),
+    //How many armies each country has in each country
+    activeArmies: new Map<string, Map<string, number>>,
     //The queued divisions which still need to be trained
     trainingQueue: new Map<string, number>(),
     trainingRate: 100, //How many divisions to train per second
@@ -30,23 +32,12 @@ export let MilitaryController = {
                 MilitaryController.trainingQueue.delete(cid)
             }
         })
-
-        // for(let cid in MilitaryController.trainingQueue) {
-        //     //Remove 1 division in trianing queue and add it to trained divisions.
-        //     let toTrain = MilitaryController.trainingQueue.get(cid) || 0
-        //     MilitaryController.trainingQueue.set(cid, toTrain - MilitaryController.trainingRate)
-        //     let current = MilitaryController.reserveArmies.get(cid) || 0
-        //     MilitaryController.reserveArmies.set(cid, current + MilitaryController.trainingRate)
-
-        //     if(current - 1 == 0) {
-        //         MilitaryController.trainingQueue.delete(cid)
-        //     }
-        // }
     }
 }
 
 getMapKeys().map(key => {
     MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
+    MilitaryController.activeArmies.set(key, new Map())
 })
 
 //Train divisions ever second
