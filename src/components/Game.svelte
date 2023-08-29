@@ -11,7 +11,7 @@
     let data = {}
 
     let zoom = undefined
-
+    //TODO: Fix max division display bug
 
     async function bootstrap() {
         data = mapData
