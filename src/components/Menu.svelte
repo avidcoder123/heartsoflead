@@ -13,7 +13,7 @@
 
     let currentPage = Page.Home
     let toTrain = 0
-    let maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
+    $: maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
     let toAttack = ""
     let attackArmies = 0
 
