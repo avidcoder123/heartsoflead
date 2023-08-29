@@ -49,12 +49,8 @@ export let MilitaryController = {
                 }
                 if(currentAttack == 0) return
 
-                let ratio = currentAttack / currentDefend
-                let attackloss = Math.floor((1/ratio) * 100)
-                let defenseloss = Math.floor(ratio * 100)                
-
-                MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - attackloss, 0))
-                MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - defenseloss,0))
+                MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - 100, 0))
+                MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - 100,0))
                 //TODO: Change ownership of countries
             })
         })
