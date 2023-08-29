@@ -6,6 +6,7 @@
     import { formatNumber } from "../lib/util";
     import Menu from "./Menu.svelte";
     import { MilitaryController } from "../lib/military";
+    import { PopulationController } from "../lib/population";
 
     let data = {}
 
@@ -68,6 +69,7 @@
     setInterval(() => {
         resDivs = formatNumber(MilitaryController.getDivisions(countryID))
     }, 100)
+
 </script>
 
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">
@@ -76,7 +78,7 @@
             <h1 class="text-white justify-center text-xl ">
                 {data[countryID].longname} ({data[countryID].name})
                 <br>
-                Population: {formatNumber(data[countryID].population)}
+                Working Population: {formatNumber(PopulationController.getPopulation(countryID))}
                 <br>
                 Reserve Divisions: {resDivs}
             </h1>

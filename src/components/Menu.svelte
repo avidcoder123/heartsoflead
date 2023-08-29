@@ -13,7 +13,7 @@
 
     let currentPage = Page.Home
     let toTrain = 0
-    let maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000) - MilitaryController.getDivisions(countryID))
+    let maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
     let toAttack = ""
     let attackArmies = 0
 
@@ -34,11 +34,12 @@
     }
 
     function launchAttack() {
-        //TODO: validate that a country has been chosen
         if(toAttack == "" || attackArmies == 0) return
-        MilitaryController.deployDivisions(countryID, toAttack, attackArmies)
+        MilitaryController.deployDivisions(countryID, toAttack, Math.floor(attackArmies))
         toAttack = ""
         attackArmies = 0
+
+        currentPage = Page.Home
     }
 </script>
 <div class="flex flex-row gap-5">
@@ -54,7 +55,8 @@
                 <h1 class="text-lg">{(toTrain || 0).toLocaleString()}/max {maxTrain.toLocaleString()} divisions <br> ({((toTrain || 0) * 1000).toLocaleString()} population used)</h1>
                 <button class="w-48 h-16 text-xl rounded-lg text-white bg-green-500" on:click={() => {
                     MilitaryController.train(countryID, toTrain);
-                    toTrain = 0
+                    toTrain = 0;
+                    currentPage = Page.Home;
                 }}>
                     Queue Training
                 </button>
