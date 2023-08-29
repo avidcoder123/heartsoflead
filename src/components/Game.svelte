@@ -55,9 +55,8 @@
     }
 
     async function main() {
-        let map = await bootstrap()
+        window["map"] = await bootstrap()
         console.log("Bootstrapped map")
-        map.update({US: "#200ac4", CA: "#200ac4", MX: "#200ac4"})
     }
 
     main().then(() => console.log("Finished"))

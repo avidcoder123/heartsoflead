@@ -1,4 +1,5 @@
 import { getMapData, getMapKeys } from "./country-data"
+import { OwnershipController } from "./ownership"
 import { PopulationController } from "./population"
 export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
@@ -45,13 +46,15 @@ export let MilitaryController = {
                     let currentReserve = MilitaryController.reserveArmies.get(attacker)!
                     MilitaryController.reserveArmies.set(attacker, currentReserve + armies)
                     MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
+                    //Give ownership of country to user 0
+                    OwnershipController.giveOwnership(defender, 0)
                     return
                 }
                 if(currentAttack == 0) return
 
                 MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - 100, 0))
                 MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - 100,0))
-                //TODO: Change ownership of countries
+
             })
         })
     },
