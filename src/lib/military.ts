@@ -25,7 +25,14 @@ export let MilitaryController = {
     deployDivisions(attacker: string, defendant: string, divisions: number) {
         let currentReserve = MilitaryController.reserveArmies.get(attacker) || 0
         MilitaryController.reserveArmies.set(attacker, currentReserve - divisions)
-        MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions)
+        let currentActive = MilitaryController.activeArmies.get(attacker)!.get(defendant) || 0
+        MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions + currentActive)
+    },
+
+    sumActive(cid: string) {
+        let total = 0
+        MilitaryController.activeArmies.get(cid)!.forEach(x => total += x)
+        return total
     },
 
     militaryTick: () => {
@@ -33,16 +40,18 @@ export let MilitaryController = {
             i.forEach((armies, defender) => {
                 let currentAttack = armies
                 let currentDefend = MilitaryController.getDivisions(defender)
+
                 if(currentDefend <= 0) {
                     let currentReserve = MilitaryController.reserveArmies.get(attacker)!
                     MilitaryController.reserveArmies.set(attacker, currentReserve + armies)
                     MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
+                    return
                 }
+                if(currentAttack == 0) return
 
                 let ratio = currentAttack / currentDefend
                 let attackloss = Math.floor((1/ratio) * 100)
-                let defenseloss = Math.floor(ratio * 100)
-                
+                let defenseloss = Math.floor(ratio * 100)                
 
                 MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - attackloss, 0))
                 MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - defenseloss,0))

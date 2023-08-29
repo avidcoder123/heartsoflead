@@ -64,8 +64,10 @@
 
     //How many reserve divisions
     let resDivs = ""
+    let actDivs = ""
     setInterval(() => {
         resDivs = formatNumber(MilitaryController.getDivisions(countryID))
+        actDivs = formatNumber(MilitaryController.sumActive(countryID))
     }, 100)
 
 </script>
@@ -79,6 +81,8 @@
                 Working Population: {formatNumber(PopulationController.getPopulation(countryID))}
                 <br>
                 Reserve Divisions: {resDivs}
+                <br>
+                Active divisions: {actDivs}
             </h1>
             <Menu {countryID} />
         {:else}
