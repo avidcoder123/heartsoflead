@@ -1,7 +1,5 @@
 import { getMapData, getMapKeys } from "./country-data"
-
-const divisionSize = 1000 //1000 people in a single division
-
+import { PopulationController } from "./population"
 export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
     reserveArmies: new Map<string, number>(),
@@ -11,10 +9,13 @@ export let MilitaryController = {
     trainingQueue: new Map<string, number>(),
     trainingRate: 100, //How many divisions to train per second
 
+    divisionSize: 1000, //1000 people in a single division
+
     //Queue up divisions to be trained
     train: (country:string, divisions: number) => {
         const currentDivisions = MilitaryController.trainingQueue.get(country) || 0
         MilitaryController.trainingQueue.set(country, currentDivisions + divisions)
+        PopulationController.decreasePopulation(country, divisions * MilitaryController.divisionSize)
     },
 
     getDivisions: (country: string) => {
@@ -43,6 +44,7 @@ export let MilitaryController = {
 
 getMapKeys().map(key => {
     MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
+    PopulationController.decreasePopulation(key, getMapData(key).population * 0.05)
     MilitaryController.activeArmies.set(key, new Map())
 })
 
