@@ -35,6 +35,7 @@
 
     function launchAttack() {
         //TODO: validate that a country has been chosen
+        if(toAttack == "" || attackArmies == 0) return
         MilitaryController.deployDivisions(countryID, toAttack, attackArmies)
         toAttack = ""
         attackArmies = 0
