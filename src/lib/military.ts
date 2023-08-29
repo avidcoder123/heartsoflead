@@ -28,6 +28,29 @@ export let MilitaryController = {
         MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions)
     },
 
+    militaryTick: () => {
+        MilitaryController.activeArmies.forEach((i, attacker) => {
+            i.forEach((armies, defender) => {
+                let currentAttack = armies
+                let currentDefend = MilitaryController.getDivisions(defender)
+                if(currentDefend <= 0) {
+                    let currentReserve = MilitaryController.reserveArmies.get(attacker)!
+                    MilitaryController.reserveArmies.set(attacker, currentReserve + armies)
+                    MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
+                }
+
+                let ratio = currentAttack / currentDefend
+                let attackloss = Math.floor((1/ratio) * 100)
+                let defenseloss = Math.floor(ratio * 100)
+                
+
+                MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - attackloss, 0))
+                MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - defenseloss,0))
+                //TODO: Change ownership of countries
+            })
+        })
+    },
+
     //Process to run every second to train divisions
     trainTick: () => {
         MilitaryController.trainingQueue.forEach((value, cid) => {
@@ -49,4 +72,7 @@ getMapKeys().map(key => {
 })
 
 //Train divisions ever second
-setInterval(MilitaryController.trainTick, 1000)
+setInterval(() => {
+    MilitaryController.trainTick()
+    MilitaryController.militaryTick()
+}, 1000)
