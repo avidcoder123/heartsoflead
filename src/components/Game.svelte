@@ -1,65 +1,12 @@
 <script>
     //import "../lib/svg-world-map";
-    import { options } from "../lib/options";
-    import  {mapData } from "../lib/country-data"
-    import { mapBorders } from "../lib/borders"
+
     import { formatNumber } from "../lib/util";
     import Menu from "./Menu.svelte";
     import { MilitaryController } from "../lib/military";
     import { PopulationController } from "../lib/population";
 
-    let data = {}
 
-    let zoom = undefined
-    async function bootstrap() {
-        data = mapData
-
-        let map = await svgWorldMap(options, data);
-        let mapContainer = document.querySelector("div#svg-world-map-container")
-        mapContainer.style.width = "80%"
-        zoom = svgPanZoom(map.worldMap)
-        window.addEventListener("keydown", e => {
-            const panSpeed = 20
-            switch (e.key) {
-                case "=":
-                    zoom.zoomBy(1.1)
-                    break
-                case "-":
-                    zoom.zoomBy(0.9)
-                    break
-                case "w":
-                    zoom.panBy({y: panSpeed, x: 0})
-                    break
-                case "s":
-                    zoom.panBy({y: -panSpeed, x: 0})
-                    break
-                case "a":
-                    zoom.panBy({y: 0, x: panSpeed})
-                    break
-                case "d":
-                    zoom.panBy({y: 0, x: -panSpeed})
-                    break
-            }
-        })
-        return map
-    }
-
-    let countryID = undefined;
-
-    window.mapClick = path => {
-        countryID = path.country.id
-
-        if (countryID === "Ocean" || countryID === "World") {
-            countryID = undefined
-        }
-    }
-
-    async function main() {
-        window["map"] = await bootstrap()
-        console.log("Bootstrapped map")
-    }
-
-    main().then(() => console.log("Finished"))
 
     //How many reserve divisions
     let resDivs = ""
