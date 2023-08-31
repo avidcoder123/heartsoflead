@@ -15,11 +15,8 @@
         }
     }
 
-    OwnershipController.giveOwnership("US", 0)
 
-    setTimeout(() => {
-        main().then(() => console.log("Bootstrapped"))
-    }, 1000)
+    main().then(() => console.log("Bootstrapped"))
 </script>
 
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">

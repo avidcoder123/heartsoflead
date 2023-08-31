@@ -1,6 +1,7 @@
 import { options } from "../lib/options";
-import  {mapData } from "../lib/country-data"
+import  {getMapKeys, mapData } from "../lib/country-data"
 import { mapBorders } from "../lib/borders"
+import { OwnershipController } from "./ownership";
 
 export let data: any = {}
 
@@ -16,6 +17,7 @@ async function bootstrap() {
     mapContainer.style.width = "80%"
     //@ts-ignore
     zoom = svgPanZoom(map.worldMap)
+
     window.addEventListener("keydown", e => {
         const panSpeed = 20
         switch (e.key) {
@@ -39,6 +41,13 @@ async function bootstrap() {
                 break
         }
     })
+    getMapKeys().map(id => {
+        //Give all territories to player 1
+        OwnershipController.giveOwnership(id, 1)
+    })
+
+    OwnershipController.giveOwnership("US", 0)
+
     return map
 }
 
