@@ -46,7 +46,7 @@ async function bootstrap() {
         OwnershipController.giveOwnership(id, 1)
     })
 
-    OwnershipController.giveOwnership("US", 0)
+    OwnershipController.giveOwnership("CN", 0)
 
     return map
 }

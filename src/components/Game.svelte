@@ -2,7 +2,6 @@
     //import "../lib/svg-world-map";
 
     import Menu from "./Menu.svelte";
-    import { OwnershipController } from "../lib/ownership";
     import { main } from "../lib/bootstrap"
 
     let countryID = "";

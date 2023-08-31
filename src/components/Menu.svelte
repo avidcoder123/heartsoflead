@@ -6,6 +6,7 @@
     import { getMapData } from "../lib/country-data";
     import { formatNumber } from "../lib/util";
     import { data } from "../lib/bootstrap";
+    import { OwnershipController } from "../lib/ownership";
 
     export let countryID = ""
     enum Page {
@@ -64,9 +65,11 @@
 </h1>
 <div class="flex flex-row gap-5">
     {#if currentPage == Page.Home}
-        <button class="text-white text-lg bg-cyan-600 rounded-lg w-36 h-16" on:click={() => currentPage=Page.Military}>
-            Military
-        </button>
+        {#if OwnershipController.ownerOf(countryID) == 0}
+            <button class="text-white text-lg bg-cyan-600 rounded-lg w-36 h-16" on:click={() => currentPage=Page.Military}>
+                Military
+            </button>
+        {/if}
     {:else if currentPage == Page.Military}
         <Modal cancelFn={()=>{currentPage=Page.Home}}>
             <div class="flex flex-col gap-5">
@@ -85,7 +88,7 @@
                 <h1 class="text-xl">Attack</h1>
                 <select class="w-48 h-12 bg-white rounded-md" bind:value={toAttack}>
                     <option value="">Select A Country</option>
-                    {#each getMapBorders(countryID) as country}
+                    {#each getMapBorders(countryID).filter(cid => OwnershipController.ownerOf(cid) != 0) as country}
                         <option value={country}>{getMapData(country).name}</option>
                     {/each}
                 </select>
