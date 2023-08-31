@@ -1,11 +1,7 @@
 <script lang="ts">
     //import "../lib/svg-world-map";
 
-    import { formatNumber } from "../lib/util";
     import Menu from "./Menu.svelte";
-    import { MilitaryController } from "../lib/military";
-    import { PopulationController } from "../lib/population";
-    import { data } from "../lib/bootstrap"
     import { OwnershipController } from "../lib/ownership";
     import { main } from "../lib/bootstrap"
 
@@ -19,6 +15,7 @@
         }
     }
 
+    OwnershipController.giveOwnership("US", 0)
 
     setTimeout(() => {
         main().then(() => console.log("Bootstrapped"))

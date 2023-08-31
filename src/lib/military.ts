@@ -42,7 +42,7 @@ export let MilitaryController = {
                 let currentAttack = armies
                 let currentDefend = MilitaryController.getDivisions(defender)
 
-                if(currentDefend <= 0) {
+                if(currentDefend <= 0 && armies > 0) {
                     let currentReserve = MilitaryController.reserveArmies.get(attacker)!
                     MilitaryController.reserveArmies.set(attacker, currentReserve + armies)
                     MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
