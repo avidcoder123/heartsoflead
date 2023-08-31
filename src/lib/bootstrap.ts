@@ -2,15 +2,19 @@ import { options } from "../lib/options";
 import  {mapData } from "../lib/country-data"
 import { mapBorders } from "../lib/borders"
 
-let data = {}
+export let data = {}
 
 let zoom: any = undefined
+
+export let map = {} as any
+
 async function bootstrap() {
     data = mapData
-
-    let map = await svgWorldMap(options, data);
+    map = await svgWorldMap(options, data);
     let mapContainer = document.querySelector("div#svg-world-map-container")
+    //@ts-ignore
     mapContainer.style.width = "80%"
+    //@ts-ignore
     zoom = svgPanZoom(map.worldMap)
     window.addEventListener("keydown", e => {
         const panSpeed = 20
@@ -38,19 +42,7 @@ async function bootstrap() {
     return map
 }
 
-let countryID = "";
-//@ts-ignore
-window["mapClick"] = (path) => {
-    countryID = path.country.id
-
-    if (countryID == "Ocean" || countryID == "World") {
-        countryID = ""
-    }
-}
-export let map: any
-async function main() {
+export async function main() {
     map = await bootstrap()
     console.log("Bootstrapped map")
 }
-
-main().then(() => console.log("Finished"))

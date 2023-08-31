@@ -1,11 +1,12 @@
 import { getMapKeys } from "./country-data"
+import { map } from "./bootstrap";
 
 export let OwnershipController = {
     ownershipMap: new Map<string, number>(),
 
     giveOwnership(cid: string, player: number) {
         OwnershipController.ownershipMap.set(cid, player)
-        ;(window["map" as any] as any).update({US: "#200ac4"})
+        ;(map as any).update({US: "#200ac4"})
     }
 }
 

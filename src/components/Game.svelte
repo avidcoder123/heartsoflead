@@ -5,7 +5,21 @@
     import Menu from "./Menu.svelte";
     import { MilitaryController } from "../lib/military";
     import { PopulationController } from "../lib/population";
+    import { data } from "../lib/bootstrap"
+    import { OwnershipController } from "../lib/ownership";
+    import { main } from "../lib/bootstrap"
 
+    let countryID = "";
+    //@ts-ignore
+    window["mapClick"] = (path) => {
+        countryID = path.country.id
+
+        if (countryID == "Ocean" || countryID == "World") {
+            countryID = ""
+        }
+    }
+
+    
 
 
     //How many reserve divisions
