@@ -2,7 +2,7 @@ import { options } from "../lib/options";
 import  {mapData } from "../lib/country-data"
 import { mapBorders } from "../lib/borders"
 
-export let data = {}
+export let data: any = {}
 
 let zoom: any = undefined
 

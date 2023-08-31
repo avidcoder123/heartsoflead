@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     //import "../lib/svg-world-map";
 
     import { formatNumber } from "../lib/util";
@@ -19,39 +19,22 @@
         }
     }
 
-    
 
-
-    //How many reserve divisions
-    let resDivs = ""
-    let actDivs = ""
-    setInterval(() => {
-        resDivs = formatNumber(MilitaryController.getDivisions(countryID))
-        actDivs = formatNumber(MilitaryController.sumActive(countryID))
-    }, 100)
-
+    setTimeout(() => {
+        main().then(() => console.log("Bootstrapped"))
+    }, 1000)
 </script>
 
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">
-
-        {#if countryID != undefined}
-            <h1 class="text-white justify-center text-xl ">
-                {data[countryID].longname} ({data[countryID].name})
-                <br>
-                Working Population: {formatNumber(PopulationController.getPopulation(countryID))}
-                <br>
-                Reserve Divisions: {resDivs}
-                <br>
-                Active divisions: {actDivs}
-            </h1>
-            <Menu {countryID} />
-        {:else}
-            <h1 class="text-white justify-center text-xl ">
-                The World
-                <br>
-                Population: {formatNumber(data["World"].population)}
-            </h1>
-        {/if}
+    {#if countryID != ""}
+        <Menu {countryID} />
+    {:else}
+        <h1 class="text-white justify-center text-xl ">
+            The World
+            <br>
+            Population: {formatNumber(data["World"].population)}
+        </h1>
+    {/if}
 </div>
 <div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-30 p-10 flex flex-col">
     <h1 class="text-white justify-center text-xl ">

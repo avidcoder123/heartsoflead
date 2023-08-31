@@ -4,6 +4,8 @@
     import { PopulationController } from "../lib/population"
     import { getMapBorders } from "../lib/borders";
     import { getMapData } from "../lib/country-data";
+    import { formatNumber } from "../lib/util";
+    import { data } from "../lib/bootstrap";
 
     export let countryID = ""
     enum Page {
@@ -41,7 +43,25 @@
 
         currentPage = Page.Home
     }
+
+    //How many reserve divisions
+    let resDivs = ""
+    let actDivs = ""
+    setInterval(() => {
+        resDivs = formatNumber(MilitaryController.getDivisions(countryID)) 
+        actDivs = formatNumber(MilitaryController.sumActive(countryID))
+    }, 100)
 </script>
+
+<h1 class="text-white justify-center text-xl">
+    {data[countryID].longname} ({data[countryID].name})
+    <br>
+    Working Population: {formatNumber(PopulationController.getPopulation(countryID))}
+    <br>
+    Reserve Divisions: {resDivs}
+    <br>
+    Active divisions: {actDivs}
+</h1>
 <div class="flex flex-row gap-5">
     {#if currentPage == Page.Home}
         <button class="text-white text-lg bg-cyan-600 rounded-lg w-36 h-16" on:click={() => currentPage=Page.Military}>

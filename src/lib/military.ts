@@ -5,7 +5,7 @@ export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
     reserveArmies: new Map<string, number>(),
     //How many armies each country has in each country
-    activeArmies: new Map<string, Map<string, number>>,
+    activeArmies: new Map<string, Map<string, number>>(),
     //The queued divisions which still need to be trained
     trainingQueue: new Map<string, number>(),
     trainingRate: 100, //How many divisions to train per second
@@ -32,7 +32,7 @@ export let MilitaryController = {
 
     sumActive(cid: string) {
         let total = 0
-        MilitaryController.activeArmies.get(cid)!.forEach(x => total += x)
+        MilitaryController.activeArmies.get(cid)?.forEach(x => total += x)
         return total
     },
 

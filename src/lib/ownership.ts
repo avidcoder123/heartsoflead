@@ -6,7 +6,7 @@ export let OwnershipController = {
 
     giveOwnership(cid: string, player: number) {
         OwnershipController.ownershipMap.set(cid, player)
-        ;(map as any).update({US: "#200ac4"})
+        //;(map as any).update({US: "#200ac4"})
     }
 }
 
