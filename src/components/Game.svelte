@@ -26,17 +26,11 @@
 </script>
 
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">
-    <!-- {#if countryID != ""}
-        <Menu {countryID} />
-    {:else}
-        <h1 class="text-white justify-center text-xl ">
-            The World
-            <br>
-            Population: {formatNumber(data["World"].population)}
-        </h1>
-    {/if} -->
+
     {#if countryID != ""}
         <Menu {countryID} />
+    {:else}
+        <h1 class="text-xl text-white">Click on a country to access its menu</h1>
     {/if}
 </div>
 <div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-30 p-10 flex flex-col">
