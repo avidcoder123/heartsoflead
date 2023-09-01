@@ -71,6 +71,7 @@ export let MilitaryController = {
     maneuverTick: () => {
         MilitaryController.maneuverQueue.forEach((i, from) => {
             i.forEach((armies, to) => {
+                console.log(armies)
                 if(armies <= 0) return
                 let currentTo = MilitaryController.reserveArmies.get(to)!
 
