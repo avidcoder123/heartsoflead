@@ -59,7 +59,7 @@ export let MilitaryController = {
                     OwnershipController.giveOwnership(defender, 0)
                     return
                 }
-                if(currentAttack == 0) return
+                if(currentAttack <= 0) return
 
                 MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - 100, 0))
                 MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - 100,0))
@@ -71,7 +71,9 @@ export let MilitaryController = {
     maneuverTick: () => {
         MilitaryController.maneuverQueue.forEach((i, from) => {
             i.forEach((armies, to) => {
+                if(armies <= 0) return
                 let currentTo = MilitaryController.reserveArmies.get(to)!
+
                 MilitaryController.maneuverQueue.get(from)!.set(to, armies - MilitaryController.trainingRate)
                 MilitaryController.reserveArmies.set(to, currentTo + MilitaryController.trainingRate)
             })
