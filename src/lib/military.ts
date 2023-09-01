@@ -63,12 +63,13 @@ export let MilitaryController = {
     trainTick: () => {
         MilitaryController.trainingQueue.forEach((value, cid) => {
             let toTrain = value || 0
+            if(toTrain - 1 <= 0) {
+                MilitaryController.trainingQueue.delete(cid)
+            }
             MilitaryController.trainingQueue.set(cid, toTrain - MilitaryController.trainingRate)
             let current = MilitaryController.reserveArmies.get(cid) || 0
             MilitaryController.reserveArmies.set(cid, current + MilitaryController.trainingRate)
-            if(toTrain - 1 == 0) {
-                MilitaryController.trainingQueue.delete(cid)
-            }
+
         })
     }
 }
