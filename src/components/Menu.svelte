@@ -19,6 +19,8 @@
     $: maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
     let toAttack = ""
     let attackArmies = 0
+    let toManeuver = ""
+    let maneuverArmies = 0
 
     function validateDivisions() {
         if(toTrain < 0) {
@@ -36,6 +38,14 @@
         }
     }
 
+    function validateManeuver() {
+        if(maneuverArmies < 0) {
+            maneuverArmies = 0
+        } else if(maneuverArmies > MilitaryController.getDivisions(countryID)) {
+            maneuverArmies = MilitaryController.getDivisions(countryID)
+        }
+    }
+
     function launchAttack() {
         if(toAttack == "" || attackArmies == 0) return
         MilitaryController.deployDivisions(countryID, toAttack, Math.floor(attackArmies))
@@ -43,6 +53,16 @@
         attackArmies = 0
 
         currentPage = Page.Home
+    }
+
+    function maneuverTroops() {
+        if(toManeuver == "" || maneuverArmies == 0) return
+        MilitaryController.maneuverDivisions(countryID, toManeuver, maneuverArmies)
+        toManeuver = ""
+        maneuverArmies = 0
+
+        currentPage = Page.Home
+
     }
 
     //How many reserve divisions
@@ -96,6 +116,20 @@
                 <input class="w-64 h-12 p-1 rounded-md" type="number" max={MilitaryController.getDivisions(countryID)} bind:value={attackArmies} on:input={() => validateAttack()}/>
                 <button class="w-36 h-14 text-xl rounded-lg text-white bg-orange-500" on:click={() => launchAttack()}>
                     Attack!
+                </button>
+            </div>
+            <div class="flex flex-col gap-5">
+                <h1 class="text-xl">Maneuver</h1>
+                <select class="w-48 h-12 bg-white rounded-md" bind:value={toManeuver}>
+                    <option value="">Select A Country</option>
+                    {#each getMapBorders(countryID).filter(cid => OwnershipController.ownerOf(cid) == 0) as country}
+                        <option value={country}>{getMapData(country).name}</option>
+                    {/each}
+                </select>
+                <h1 class="text-lg">Maneuver Divisions (Max {MilitaryController.getDivisions(countryID)})</h1>
+                <input class="w-64 h-12 p-1 rounded-md" type="number" max={MilitaryController.getDivisions(countryID)} bind:value={maneuverArmies} on:input={() => validateManeuver()}/>
+                <button class="w-36 h-14 text-xl rounded-lg text-white bg-blue-500" on:click={() => maneuverTroops()}>
+                    Maneuver
                 </button>
             </div>
         </Modal>

@@ -9,6 +9,8 @@ export let MilitaryController = {
     //The queued divisions which still need to be trained
     trainingQueue: new Map<string, number>(),
     trainingRate: 100, //How many divisions to train per second
+    //Maneuvering queue
+    maneuverQueue: new Map<string, Map<string, number>>(),
 
     divisionSize: 1000, //1000 people in a single division
 
@@ -28,6 +30,13 @@ export let MilitaryController = {
         MilitaryController.reserveArmies.set(attacker, currentReserve - divisions)
         let currentActive = MilitaryController.activeArmies.get(attacker)!.get(defendant) || 0
         MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions + currentActive)
+    },
+
+    maneuverDivisions(from: string, to: string, divisions: number) {
+        let currentManeuver = MilitaryController.maneuverQueue.get(from)!.get(to)!
+        let currentFromArmies = MilitaryController.reserveArmies.get(from)!
+        MilitaryController.maneuverQueue.get(from)!.set(to, currentManeuver + divisions)
+        MilitaryController.reserveArmies.set(from, currentFromArmies - divisions)
     },
 
     sumActive(cid: string) {
@@ -59,6 +68,16 @@ export let MilitaryController = {
         })
     },
 
+    maneuverTick: () => {
+        MilitaryController.maneuverQueue.forEach((i, from) => {
+            i.forEach((armies, to) => {
+                let currentTo = MilitaryController.reserveArmies.get(to)!
+                MilitaryController.maneuverQueue.get(from)!.set(to, armies - MilitaryController.trainingRate)
+                MilitaryController.reserveArmies.set(to, currentTo + MilitaryController.trainingRate)
+            })
+        })
+    },
+
     //Process to run every second to train divisions
     trainTick: () => {
         MilitaryController.trainingQueue.forEach((value, cid) => {
@@ -72,16 +91,19 @@ export let MilitaryController = {
 
         })
     }
+
 }
 
 getMapKeys().map(key => {
     MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
     PopulationController.decreasePopulation(key, getMapData(key).population * 0.05)
     MilitaryController.activeArmies.set(key, new Map())
+    MilitaryController.maneuverQueue.set(key, new Map())
 })
 
 //Train divisions ever second
 setInterval(() => {
     MilitaryController.trainTick()
     MilitaryController.militaryTick()
+    MilitaryController.maneuverTick()
 }, 1000)
