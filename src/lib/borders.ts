@@ -79,6 +79,7 @@ export const mapBorders = {
   "IR": ["AF", "AM", "AZ", "IQ", "PK", "TR", "TM"],
   "IQ": ["IR", "JO", "KW", "SA", "SY", "TR"],
   "IE": ["GB"],
+  "GL": ["IS", "CA"],
   "IL": ["EG", "JO", "LB", "PS", "SY"],
   "IT": ["AT", "CH", "FR", "SI", "SM", "VA"],
   "JM": ['CU', 'HT', 'CO', 'PA', 'CR', 'HN', 'NI', 'BS', 'VE', 'DO'],
