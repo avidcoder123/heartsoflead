@@ -17,7 +17,7 @@
 
     let currentPage = Page.Home
     let toTrain = 0
-    $: maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
+    let maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
     let toAttack = ""
     let attackArmies = 0
     let toManeuver = ""
@@ -72,6 +72,7 @@
     setInterval(() => {
         resDivs = formatNumber(MilitaryController.getDivisions(countryID)) 
         actDivs = formatNumber(MilitaryController.sumActive(countryID))
+        maxTrain = Math.floor((PopulationController.getPopulation(countryID) / 1000))
     }, 100)
 </script>
 
@@ -109,7 +110,7 @@
                 <h1 class="text-xl">Attack</h1>
                 <select class="w-48 h-12 bg-white rounded-md" bind:value={toAttack}>
                     <option value="">Select A Country</option>
-                    {#each getMapBorders(countryID).filter(cid => OwnershipController.ownerOf(cid) != 0) as country}
+                    {#each (getMapBorders(countryID)||[]).filter(cid => OwnershipController.ownerOf(cid) != 0) as country}
                         <option value={country}>{getMapData(country).name}</option>
                     {/each}
                 </select>
@@ -123,7 +124,7 @@
                 <h1 class="text-xl">Maneuver</h1>
                 <select class="w-48 h-12 bg-white rounded-md" bind:value={toManeuver}>
                     <option value="">Select A Country</option>
-                    {#each getMapBorders(countryID).filter(cid => OwnershipController.ownerOf(cid) == PlayersController.currentPlayer) as country}
+                    {#each (getMapBorders(countryID)||[]).filter(cid => OwnershipController.ownerOf(cid) == PlayersController.currentPlayer) as country}
                         <option value={country}>{getMapData(country).name}</option>
                     {/each}
                 </select>
