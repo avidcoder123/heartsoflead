@@ -42,11 +42,10 @@ async function bootstrap() {
         }
     })
     getMapKeys().map(id => {
-        //Give all territories to player 1
-        OwnershipController.giveOwnership(id, 1)
+        //Randomize territories
+        OwnershipController.giveOwnership(id, Math.floor(Math.random() * 8))
     })
 
-    OwnershipController.giveOwnership("CN", 0)
 
     return map
 }
