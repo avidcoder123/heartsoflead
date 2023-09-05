@@ -3,6 +3,7 @@
 
     import Menu from "./Menu.svelte";
     import { main } from "../lib/bootstrap"
+    import { PlayersController } from "../lib/player";
 
     let countryID = "";
     //@ts-ignore
@@ -27,9 +28,14 @@
     {/if}
 </div>
 <div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-30 p-10 flex flex-col">
-    <h1 class="text-white justify-center text-xl ">
-        Side Dashboard
-    </h1>
+    <span class="text-white text-xl mt-3 flex flex-row items-center gap-2">
+        You are 
+        <div class="h-4 w-4 border-white border-2" style={`background-color:#${PlayersController.colors[PlayersController.currentPlayer]};`}></div>
+         {PlayersController.colorNames[PlayersController.currentPlayer]}
+    </span>
+    <div class="flex flex-col gap-2 pt-2">
+    </div>
+    
     <h1 class="text-white text-lg mt-auto mb-5">
         Use WASD or drag mouse to pan the map.
         <br><br>
