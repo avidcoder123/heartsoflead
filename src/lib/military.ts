@@ -75,8 +75,8 @@ export let MilitaryController = {
                 if(armies <= 0) return
                 let currentTo = MilitaryController.reserveArmies.get(to)!
 
-                MilitaryController.maneuverQueue.get(from)!.set(to, armies - MilitaryController.trainingRate)
-                MilitaryController.reserveArmies.set(to, currentTo + MilitaryController.trainingRate)
+                MilitaryController.maneuverQueue.get(from)!.set(to, Math.max(0, armies - MilitaryController.trainingRate))
+                MilitaryController.reserveArmies.set(to, currentTo + Math.min(MilitaryController.trainingRate, armies))
             })
         })
     },
@@ -85,12 +85,10 @@ export let MilitaryController = {
     trainTick: () => {
         MilitaryController.trainingQueue.forEach((value, cid) => {
             let toTrain = value || 0
-            if(toTrain - 1 <= 0) {
-                MilitaryController.trainingQueue.delete(cid)
-            }
-            MilitaryController.trainingQueue.set(cid, toTrain - MilitaryController.trainingRate)
+            if(toTrain <= 0) return
+            MilitaryController.trainingQueue.set(cid, toTrain - Math.min(toTrain, MilitaryController.trainingRate))
             let current = MilitaryController.reserveArmies.get(cid) || 0
-            MilitaryController.reserveArmies.set(cid, current + MilitaryController.trainingRate)
+            MilitaryController.reserveArmies.set(cid, current + Math.min(toTrain, MilitaryController.trainingRate))
 
         })
     }

@@ -175,7 +175,7 @@ export const mapBorders = {
   "UG": ["CD", "KE", "RW", "SS", "TZ"],
   "UA": ["BY", "HU", "MD", "PL", "RO", "RU", "SK"],
   "AE": ["OM", "SA"],
-  "GB": ["IE"],
+  "GB": ["IE", "FR", "IS"],
   "US": ["CA", "MX"],
   "UY": ["AR", "BR"],
   "UZ": ["AF", "KZ", "KG", "TJ", "TM"],
