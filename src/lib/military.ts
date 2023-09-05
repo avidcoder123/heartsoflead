@@ -33,7 +33,7 @@ export let MilitaryController = {
     },
 
     maneuverDivisions(from: string, to: string, divisions: number) {
-        let currentManeuver = MilitaryController.maneuverQueue.get(from)!.get(to)!
+        let currentManeuver = MilitaryController.maneuverQueue.get(from)!.get(to) || 0
         let currentFromArmies = MilitaryController.reserveArmies.get(from)!
         MilitaryController.maneuverQueue.get(from)!.set(to, currentManeuver + divisions)
         MilitaryController.reserveArmies.set(from, currentFromArmies - divisions)
