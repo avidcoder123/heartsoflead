@@ -1,7 +1,7 @@
 export const newBorders = {
-    "AD": [],
-    "AE": [],
-    "AF": [],
+    "AD": ["FR", "ES"],
+    "AE": ["OM", "QA", "SA", "IR"],
+    "AF": ["PK", "IR", "TM", "UZ", "TJ", "CN"],
     "AG": [],
     "AI": [],
     "AL": [],

@@ -23,9 +23,10 @@
     function taskNext() {
         for(let key in newBorders) {
             if(newBorders[key as keyof typeof newBorders].length == 0) {
-                nextTask = mapData[key as keyof typeof mapData].name as string
+                
                 (map as any).update(JSON.parse(`{"${key}":"#ff0000"}`))
                 console.log(key)
+                nextTask = mapData[key as keyof typeof mapData].name as string
                 break
             }
         }
@@ -71,7 +72,7 @@
 
     return map
     }
-    bootstrap().then(()=>console.log("z"))
+    bootstrap().then(()=>taskNext())
 </script>
 
 <div class="w-screen h-[20%] bg-slate-600 fixed bottom-0 z-30 p-10 flex flex-row gap-5">
@@ -93,7 +94,6 @@
     
     <h1 class="text-white text-lg mt-auto mb-5">
         Use WASD or drag mouse to pan the map.
-        <button class="w-32 h-12 bg-cyan-500" on:click={taskNext}> Next Task</button>
         <br><br>
         Use - and = or the scroll wheel to zoom in/out.
     </h1>
