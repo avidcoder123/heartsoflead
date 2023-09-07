@@ -53,6 +53,8 @@ async function bootstrap() {
 }
 
 export async function main() {
+    let tickSpeed = 100 //100 Ticks per second
+
     map = await bootstrap()
     console.log("Bootstrapped map")
 
@@ -68,5 +70,5 @@ export async function main() {
         MilitaryController.trainTick()
         MilitaryController.militaryTick()
         MilitaryController.maneuverTick()
-    }, 1000/MilitaryController.trainingRate)
+    }, 1000/tickSpeed)
 }
