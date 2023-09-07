@@ -61,8 +61,8 @@ export let MilitaryController = {
                 }
                 if(currentAttack <= 0) return
 
-                MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - 100, 0))
-                MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - 100,0))
+                MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - 1, 0))
+                MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - 1,0))
 
             })
         })
@@ -75,8 +75,8 @@ export let MilitaryController = {
                 if(armies <= 0) return
                 let currentTo = MilitaryController.reserveArmies.get(to)!
 
-                MilitaryController.maneuverQueue.get(from)!.set(to, Math.max(0, armies - MilitaryController.trainingRate))
-                MilitaryController.reserveArmies.set(to, currentTo + Math.min(MilitaryController.trainingRate, armies))
+                MilitaryController.maneuverQueue.get(from)!.set(to, Math.max(0, armies - 1))
+                MilitaryController.reserveArmies.set(to, currentTo + Math.min(1, armies))
             })
         })
     },
@@ -86,25 +86,14 @@ export let MilitaryController = {
         MilitaryController.trainingQueue.forEach((value, cid) => {
             let toTrain = value || 0
             if(toTrain <= 0) return
-            MilitaryController.trainingQueue.set(cid, toTrain - Math.min(toTrain, MilitaryController.trainingRate))
+            MilitaryController.trainingQueue.set(cid, toTrain - 1)
             let current = MilitaryController.reserveArmies.get(cid) || 0
-            MilitaryController.reserveArmies.set(cid, current + Math.min(toTrain, MilitaryController.trainingRate))
+            MilitaryController.reserveArmies.set(cid, current + 1)
 
         })
     }
 
 }
 
-getMapKeys().map(key => {
-    MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
-    PopulationController.decreasePopulation(key, getMapData(key).population * 0.05)
-    MilitaryController.activeArmies.set(key, new Map())
-    MilitaryController.maneuverQueue.set(key, new Map())
-})
 
-//Train divisions ever second
-setInterval(() => {
-    MilitaryController.trainTick()
-    MilitaryController.militaryTick()
-    MilitaryController.maneuverTick()
-}, 1000)
+

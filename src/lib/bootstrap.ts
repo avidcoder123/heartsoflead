@@ -1,7 +1,9 @@
 import { options } from "../lib/options";
-import  {getMapKeys, mapData } from "../lib/country-data"
+import  {getMapData, getMapKeys, mapData } from "../lib/country-data"
 import { mapBorders } from "../lib/borders"
 import { OwnershipController } from "./ownership";
+import { MilitaryController } from "./military";
+import { PopulationController } from "./population";
 
 export let data: any = {}
 
@@ -53,4 +55,18 @@ async function bootstrap() {
 export async function main() {
     map = await bootstrap()
     console.log("Bootstrapped map")
+
+    getMapKeys().map(key => {
+        MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
+        PopulationController.decreasePopulation(key, getMapData(key).population * 0.05)
+        MilitaryController.activeArmies.set(key, new Map())
+        MilitaryController.maneuverQueue.set(key, new Map())
+    })
+
+    //Train divisions ever second
+    setInterval(() => {
+        MilitaryController.trainTick()
+        MilitaryController.militaryTick()
+        MilitaryController.maneuverTick()
+    }, 1000/MilitaryController.trainingRate)
 }
