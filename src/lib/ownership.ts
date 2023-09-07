@@ -20,7 +20,6 @@ export let OwnershipController = {
 
     giveOwnership(cid: string, player: number) {
         OwnershipController.ownershipMap.set(cid, player)
-        console.log(map)
         try {
             OwnershipController.updateMapColor()
         } catch(e) {

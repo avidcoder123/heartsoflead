@@ -1,9 +1,11 @@
 <script lang="ts">
     //import "../lib/svg-world-map";
 
-    import Menu from "./Menu.svelte";
     import { main } from "../lib/bootstrap"
+    import { mapData } from "../lib/country-data";
+    import { newBorders } from "../lib/newborders";
     import { PlayersController } from "../lib/player";
+    import Menu from "./Menu.svelte";
 
     let countryID = "";
     //@ts-ignore
@@ -14,6 +16,10 @@
             countryID = ""
         }
     }
+
+
+
+
 
 
     main().then(() => console.log("Bootstrapped"))
