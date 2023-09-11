@@ -6,6 +6,7 @@
     import { newBorders } from "../lib/newborders";
     import { PlayersController } from "../lib/player";
     import Menu from "./Menu.svelte";
+    import Modal from "./Modal.svelte";
 
     let countryID = "";
     //@ts-ignore
@@ -17,9 +18,7 @@
         }
     }
 
-
-
-
+    let tutorial = false
 
 
     main().then(() => console.log("Bootstrapped"))
@@ -45,10 +44,18 @@
         <button class="w-20 h-10 rounded-md bg-cyan-500" on:click={() => document.location = "/game?tps=100"}>100tps</button>
         <button class="w-20 h-10 rounded-md bg-cyan-500" on:click={() => document.location = "/game?tps=1000"}>1000tps</button>
     </div>
-    
+    <button class="w-36 rounded-md bg-cyan-500 h-12 mt-10" on:click={() => tutorial = true}>Tutorial</button>
     <h1 class="text-white text-lg mt-auto mb-5">
         Use WASD or drag mouse to pan the map.
         <br><br>
         Use - and = or the scroll wheel to zoom in/out.
     </h1>
 </div>
+{#if tutorial}
+    <Modal cancelFn={() => tutorial = false}>
+        <h1 class="text-xl">Welcome to Hearts of Lead</h1>
+        <p class="text-md">
+            
+        </p>
+    </Modal>
+{/if}
