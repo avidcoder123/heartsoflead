@@ -53,7 +53,11 @@ async function bootstrap() {
 }
 
 export async function main() {
-    let tickSpeed = 100 //100 Ticks per second
+    let tickSpeed = 100
+    let tps = parseInt((new URLSearchParams(window.location.search)).get("tps")!) || 100
+    if (tps == 100 || tps == 1000 || tps == 50) {
+        tickSpeed = tps
+    }
 
     map = await bootstrap()
     console.log("Bootstrapped map")

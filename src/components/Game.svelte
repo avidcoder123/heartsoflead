@@ -39,7 +39,11 @@
         <div class="h-4 w-4 border-white border-2" style={`background-color:#${PlayersController.colors[PlayersController.currentPlayer]};`}></div>
          {PlayersController.colorNames[PlayersController.currentPlayer]}
     </span>
-    <div class="flex flex-col gap-2 pt-2">
+    <h1 class="text-white text-lg mt-3">Adjust tickspeed (Refreshes page!)</h1>
+    <div class="flex flex-row gap-2 pt-2">
+        <button class="w-20 h-10 rounded-md bg-cyan-500" on:click={() => document.location = "/game?tps=50"}>50tps</button>
+        <button class="w-20 h-10 rounded-md bg-cyan-500" on:click={() => document.location = "/game?tps=100"}>100tps</button>
+        <button class="w-20 h-10 rounded-md bg-cyan-500" on:click={() => document.location = "/game?tps=1000"}>1000tps</button>
     </div>
     
     <h1 class="text-white text-lg mt-auto mb-5">
