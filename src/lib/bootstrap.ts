@@ -67,6 +67,7 @@ export async function main() {
         PopulationController.decreasePopulation(key, getMapData(key).population * 0.05)
         MilitaryController.activeArmies.set(key, new Map())
         MilitaryController.maneuverQueue.set(key, new Map())
+        MilitaryController.returnQueue.set(key, 0)
     })
 
     //Train divisions ever second
@@ -74,5 +75,6 @@ export async function main() {
         MilitaryController.trainTick()
         MilitaryController.militaryTick()
         MilitaryController.maneuverTick()
+        MilitaryController.returnTick()
     }, 1000/tickSpeed)
 }

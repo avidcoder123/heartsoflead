@@ -6,6 +6,8 @@ export let MilitaryController = {
     reserveArmies: new Map<string, number>(),
     //How many armies each country has in each country
     activeArmies: new Map<string, Map<string, number>>(),
+    //How many armies are in the process of returning home after a battle
+    returnQueue: new Map<string, number>(),
     //The queued divisions which still need to be trained
     trainingQueue: new Map<string, number>(),
     //Maneuvering queue
@@ -52,10 +54,10 @@ export let MilitaryController = {
 
                 if(currentDefend <= 0 && armies > 0) {
                     let currentReserve = MilitaryController.reserveArmies.get(attacker)!
-                    MilitaryController.reserveArmies.set(attacker, currentReserve + armies)
                     MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
                     //Give ownership of country to user 0
                     OwnershipController.giveOwnership(defender, 0)
+                    MilitaryController.returnQueue.set(attacker, armies)
                     return
                 }
                 if(currentAttack <= 0) return
@@ -77,6 +79,15 @@ export let MilitaryController = {
                 MilitaryController.maneuverQueue.get(from)!.set(to, Math.max(0, armies - 1))
                 MilitaryController.reserveArmies.set(to, currentTo + Math.min(1, armies))
             })
+        })
+    },
+
+    returnTick: () => {
+        MilitaryController.returnQueue.forEach((number, cid) => {
+            if(number <= 0) return
+            MilitaryController.returnQueue.set(cid, number - 1)
+            let armies = MilitaryController.reserveArmies.get(cid) || 0
+            MilitaryController.reserveArmies.set(cid, armies + 1)
         })
     },
 
