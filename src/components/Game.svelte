@@ -53,9 +53,21 @@
 </div>
 {#if tutorial}
     <Modal cancelFn={() => tutorial = false}>
-        <h1 class="text-xl">Welcome to Hearts of Lead</h1>
-        <p class="text-md">
-            
-        </p>
+        <div class="flex flex-col">
+            <h1 class="text-xl">Welcome to Hearts of Lead</h1><br>
+            <p class="text-lg leading-8">
+                Hearts of Lead is a game where you control a certain color of countries and try to take over the world.<br>
+                In singleplayer, you control the dark blue countries. In multiplayer, check the side dashboard to see your color.<br><br>
+
+                You can click a country to enter its menu. In the menu, you can see the country's working population. The working population is your population not in the military.<br>
+                Your <b>reserve divisions</b> are the amount of divisions in your military which are not in combat.<br>
+                Your <b>active divisions</b> are the divisions who are currently in combat. <br><br>
+
+                Click the Military button on the menu to control your country's military. You can Train, Attack, or Maneuver.<br>
+                <b>Training</b> allows you to recruit your working population into the military over time.<br>
+                <b>Attacking</b> allows you to fight another country and take over another country. <br>
+                <b>Maneuvering</b> allows yu to slowly move troops from one country to an adjacent country which is owned by you.
+            </p>
+        </div>
     </Modal>
 {/if}
