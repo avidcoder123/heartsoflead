@@ -1,4 +1,4 @@
-import { mapData } from "../lib/country-data";
+import { getMapKeys, mapData } from "../lib/country-data";
 
 export let PopulationController = {
     population: new Map<string, number>(),
@@ -15,6 +15,6 @@ export let PopulationController = {
     decreasePopulation: (cid: string, amount: number) => PopulationController.addPopulation(cid, -amount)
 }
 
-for(let cid in mapData) {
+for(let cid of getMapKeys()) {
     PopulationController.population.set(cid, mapData[cid as keyof typeof mapData].population)
 }

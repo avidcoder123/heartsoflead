@@ -1,10 +1,12 @@
+import { mapBorders } from "./borders"
+
 export function getMapData(cid: string) {
 	return mapData[<keyof typeof mapData>cid]
 }
 
 export function getMapKeys(): Array<keyof typeof mapData> {
 	let keys: Array<keyof typeof mapData> = []
-	for(let key in mapData) {
+	for(let key in mapBorders) {
 		keys.push(<keyof typeof mapData>key)
 	}
 	return keys
