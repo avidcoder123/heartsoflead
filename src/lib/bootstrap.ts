@@ -63,16 +63,26 @@ export async function main() {
     console.log("Bootstrapped map")
 
     getMapKeys().map(key => {
-        MilitaryController.reserveArmies.set(key, Math.floor(getMapData(key).population * 0.05 / 1000))
-        PopulationController.decreasePopulation(key, getMapData(key).population * 0.05)
+        let population = getMapData(key).population
+        let armies = Math.floor(
+            population *
+            1 /  
+            (30 * (Math.log(population) / Math.log(10)))
+             / 1000
+        )
+        MilitaryController.reserveArmies.set(key, armies)
+        PopulationController.decreasePopulation(key, armies * 1000)
         MilitaryController.activeArmies.set(key, new Map())
         MilitaryController.maneuverQueue.set(key, new Map())
         MilitaryController.returnQueue.set(key, 0)
     })
 
+    const trainSkips = 1 //Magnitude of training slowdown
+    let skips = 0
     //Train divisions ever second
     setInterval(() => {
-        MilitaryController.trainTick()
+        skips++
+        if(skips % trainSkips == 0) MilitaryController.trainTick() // Train armies every 100 ticks
         MilitaryController.militaryTick()
         MilitaryController.maneuverTick()
         MilitaryController.returnTick()
