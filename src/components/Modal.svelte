@@ -8,6 +8,6 @@
         <slot />
     </div>
     <button class="text-white text-lg bg-red-500 rounded-lg w-32 h-12 absolute left-5 bottom-5" on:click={cancelFn}>
-        Cancel
+        Close
     </button>
 </div>

@@ -66,7 +66,7 @@
                 Click the Military button on the menu to control your country's military. You can Train, Attack, or Maneuver.<br>
                 <b>Training</b> allows you to recruit your working population into the military over time.<br>
                 <b>Attacking</b> allows you to fight another country and take over another country. <br>
-                <b>Maneuvering</b> allows yu to slowly move troops from one country to an adjacent country which is owned by you.
+                <b>Maneuvering</b> allows you to slowly move troops from one country to an adjacent country which is owned by you.
             </p>
         </div>
     </Modal>
