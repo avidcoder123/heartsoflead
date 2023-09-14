@@ -12,11 +12,15 @@
     .then(val => {
         numPlayers = val.length - 1
         playersList = new Array(...val).slice(1)
+        claimedList = playersList.map(x => x.claimed)
     })
 
     let username = ""
     let password = ""
     let playerID = 0
+
+    let claimedList: boolean[] = []
+
 </script>
 <div class="flex flex-col p-10 items-center gap-5">
 	<h1 class="text-white text-5xl text-center">Select Player</h1>
@@ -26,11 +30,14 @@
             <option value={x}>{player.username || "<Unclaimed>"}</option>
         {/each}
     </select>
-    <!-- {#if playersList[playerID].claimed == false}
+    {#if !claimedList[playerID] || false}
         <h1 class="text-white text-2xl">Set Username</h1>
         <input bind:value={username} class="rounded-md w-96 h-10 p-1" />
-    {/if} -->
+    {/if}
     <h1 class="text-white text-2xl">Password</h1>
     <input bind:value={password} class="rounded-md w-96 h-10 p-1" />
-    <button class="bg-blue-500 rounded-lg w-52 h-14">Create Game</button>
+    <button class="bg-blue-500 rounded-lg w-52 h-14" disabled={
+        (claimedList[playerID] && password.length > 0) ||
+        (claimedList[playerID]) && username.length > 0 && password.length > 0
+    }>Create Game</button>
 </div>
