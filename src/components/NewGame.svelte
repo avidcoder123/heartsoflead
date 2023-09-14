@@ -1,4 +1,5 @@
 <script>
+    import { push, ref, set } from "firebase/database";
     import { db } from "../lib/firebase";
 
     let name = ""
@@ -7,7 +8,21 @@
 
     function submit() {
         if(name.length <= 0) return
-        
+
+        let id = Date.now()
+
+        set(ref(db, `games/${id}/metadata`), {
+            name,
+            players: maxPlayers,
+            speed: speed
+        })
+        for(let i = 1; i <= maxPlayers; i++) {
+            set(ref(db, `games/${id}/players/${i}`), {
+                claimed: false
+            })
+        }
+
+        window.location = `login/?id=${id}`
     }
 </script>
 <div class="flex flex-col p-10 items-center gap-5">
@@ -23,5 +38,5 @@
         <option value="normal">Normal (100 tps)</option>
         <option value="blitz">Blitzkrieg (1000tps)</option>
     </select>
-    <button class="bg-blue-500 rounded-lg w-52 h-14" on:click={submit}>Create Game</button>
+    <button class="bg-blue-500 rounded-lg w-52 h-14" on:click={submit} disabled={name.length <= 0}>Create Game</button>
 </div>
