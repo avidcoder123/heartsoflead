@@ -1,5 +1,36 @@
 <script lang="ts">
+    import { db } from "../lib/firebase";
+    import { child, ref, get } from "firebase/database";
+
     let id = parseInt((new URLSearchParams(window.location.search)).get("id")!)
 
-    
+    let numPlayers = 0
+    let playersList: any[] = []
+
+    get(child(ref(db), `games/${id}/players`))
+    .then(snap => snap.val())
+    .then(val => {
+        numPlayers = val.length - 1
+        playersList = new Array(...val).slice(1)
+    })
+
+    let username = ""
+    let password = ""
+    let playerID = 0
 </script>
+<div class="flex flex-col p-10 items-center gap-5">
+	<h1 class="text-white text-5xl text-center">Select Player</h1>
+    <h1 class="text-white text-2xl">Choose Player</h1>
+    <select class="w-54 h-8 p-1 rounded-md" bind:value={playerID}>
+        {#each playersList as player, x}
+            <option value={x}>{player.username || "<Unclaimed>"}</option>
+        {/each}
+    </select>
+    <!-- {#if playersList[playerID].claimed == false}
+        <h1 class="text-white text-2xl">Set Username</h1>
+        <input bind:value={username} class="rounded-md w-96 h-10 p-1" />
+    {/if} -->
+    <h1 class="text-white text-2xl">Password</h1>
+    <input bind:value={password} class="rounded-md w-96 h-10 p-1" />
+    <button class="bg-blue-500 rounded-lg w-52 h-14">Create Game</button>
+</div>

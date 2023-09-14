@@ -15,14 +15,13 @@
             name,
             players: maxPlayers,
             speed: speed
-        })
-        for(let i = 1; i <= maxPlayers; i++) {
-            set(ref(db, `games/${id}/players/${i}`), {
-                claimed: false
-            })
-        }
-
-        window.location = `login/?id=${id}`
+        }).then(() => {
+            for(let i = 1; i <= maxPlayers; i++) {
+                set(ref(db, `games/${id}/players/${i}`), {
+                    claimed: false
+                })
+            }
+        }).then(() => window.location = `login/?id=${id}`)
     }
 </script>
 <div class="flex flex-col p-10 items-center gap-5">
