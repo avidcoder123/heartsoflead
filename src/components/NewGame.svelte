@@ -1,6 +1,7 @@
-<script>
-    import { push, ref, set } from "firebase/database";
+<script lang="ts">
+    import { child, increment, push, ref, set } from "firebase/database";
     import { db } from "../lib/firebase";
+    import { getMapData, getMapKeys, mapData } from "../lib/country-data";
 
     let name = ""
     let maxPlayers = 2
@@ -15,13 +16,40 @@
             name,
             players: maxPlayers,
             speed: speed
-        }).then(() => {
+        })
+        .then(() => {
             for(let i = 1; i <= maxPlayers; i++) {
                 set(ref(db, `games/${id}/players/${i}`), {
                     claimed: false
                 })
             }
-        }).then(() => window.location = `login/?id=${id}`)
+        })
+        .then(() => {
+            getMapKeys().map((key, idx) => {
+                let population = getMapData(key).population
+                let armies = Math.floor(
+                    population *
+                    1 /  
+                    (30 * (Math.log(population) / Math.log(10)))
+                    / 1000
+                )
+
+                Promise.all([
+                    set(ref(db, `games/${id}/data/reserveArmies/${key}`), armies),
+                    set(ref(db, `games/${id}/data/population/${key}`), population),
+                    set(ref(db, `games/${id}/data/population/${key}`), increment(-armies * 1000)),
+                    set(ref(db, `games/${id}/data/returnQueue/${key}`), 0),
+                    set(ref(db, `games/${id}/data/ownership/${key}`), (idx%maxPlayers)+1)
+                ]).then(()=>null)
+
+                // MilitaryController.reserveArmies.set(key, armies)
+                // PopulationController.decreasePopulation(key, armies * 1000)
+                // MilitaryController.activeArmies.set(key, new Map())
+                // MilitaryController.maneuverQueue.set(key, new Map())
+                // MilitaryController.returnQueue.set(key, 0)
+            })
+        })
+        .then(() => window.location.href = `login/?id=${id}`)
     }
 </script>
 <div class="flex flex-col p-10 items-center gap-5">
