@@ -34,12 +34,14 @@
                     / 1000
                 )
 
+                let randomizer = Math.floor(Math.random() * 8)
+
                 Promise.all([
                     set(ref(db, `games/${id}/data/reserveArmies/${key}`), armies),
                     set(ref(db, `games/${id}/data/population/${key}`), population),
                     set(ref(db, `games/${id}/data/population/${key}`), increment(-armies * 1000)),
                     set(ref(db, `games/${id}/data/returnQueue/${key}`), 0),
-                    set(ref(db, `games/${id}/data/ownership/${key}`), (idx%maxPlayers)+1)
+                    set(ref(db, `games/${id}/data/ownership/${key}`), ((idx+randomizer)%maxPlayers)+1)
                 ]).then(()=>null)
 
                 // MilitaryController.reserveArmies.set(key, armies)
