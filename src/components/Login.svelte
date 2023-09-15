@@ -21,6 +21,12 @@
 
     let claimedList: boolean[] = []
 
+    async function login() {
+        if(claimedList[playerID]) {
+            let player = (await get(child(ref(db), `/games/${id}/players/${playerID + 1}`))).val()
+        }
+    }
+
 </script>
 <div class="flex flex-col p-10 items-center gap-5">
 	<h1 class="text-white text-5xl text-center">Select Player</h1>
@@ -36,7 +42,7 @@
     {/if}
     <h1 class="text-white text-2xl">Password</h1>
     <input bind:value={password} class="rounded-md w-96 h-10 p-1" />
-    <button class="bg-blue-500 rounded-lg w-52 h-14" disabled={
+    <button class="bg-blue-500 rounded-lg w-52 h-14" on:click={login} disabled={
         (claimedList[playerID] && password.length > 0) ||
         (claimedList[playerID]) && username.length > 0 && password.length > 0
     }>Create Game</button>
