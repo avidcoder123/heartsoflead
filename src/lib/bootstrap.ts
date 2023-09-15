@@ -4,6 +4,8 @@ import { mapBorders } from "../lib/borders"
 import { OwnershipController } from "./ownership";
 import { MilitaryController } from "./military";
 import { PopulationController } from "./population";
+import { child, get, ref } from "firebase/database";
+import { db } from "./firebase";
 
 export let data: any = {}
 
@@ -53,11 +55,18 @@ async function bootstrap() {
 }
 
 export async function main() {
-    let tickSpeed = 100
-    let tps = parseInt((new URLSearchParams(window.location.search)).get("tps")!) || 100
-    if (tps == 100 || tps == 1000 || tps == 50) {
-        tickSpeed = tps
+    let id = parseInt((new URLSearchParams(window.location.search)).get("id")!)
+
+    if (!id) {
+        window.location.href = ""
     }
+    let gameData = (await get(child(ref(db), `games/${id}/metadata`))).val()
+    
+    let tickSpeed = ({
+        "slow": 50,
+        "normal": 100,
+        "blitzkrieg": 1000
+    } as any)[gameData.speed] as number
 
     map = await bootstrap()
     console.log("Bootstrapped map")
