@@ -21,14 +21,7 @@
 
     let claimedList: boolean[] = []
 
-    setInterval(() => {
-        console.log(        !(claimedList[playerID] && password.length > 0) ||
-        !(!claimedList[playerID] && username.length > 0 && password.length > 0))
-
-    }, 1000)
-
     async function login() {
-        console.log(playerID)
         if(claimedList[playerID]) {
             let player = (await get(child(ref(db), `/games/${id}/players/${playerID + 1}`))).val()
             if(player.password == password) {
@@ -62,7 +55,6 @@
     <h1 class="text-white text-2xl">Password</h1>
     <input bind:value={password} type="password" class="rounded-md w-96 h-10 p-1" />
     <button class="bg-blue-500 rounded-lg w-52 h-14" on:click={() => login().then(() => null)} disabled={
-        !(claimedList[playerID] && password.length > 0) ||
-        !(!claimedList[playerID] && username.length > 0 && password.length > 0)
-    }>Create Game</button>
+        claimedList[playerID] ? password.length == 0 : username.length == 0 || password.length == 0
+    }>Login</button>
 </div>
