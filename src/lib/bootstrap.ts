@@ -45,10 +45,10 @@ async function bootstrap() {
                 break
         }
     })
-    getMapKeys().map(id => {
-        //Randomize territories
-        OwnershipController.giveOwnership(id, Math.floor(Math.random() * 8))
-    })
+    // getMapKeys().map(id => {
+    //     //Randomize territories
+    //     OwnershipController.giveOwnership(id, Math.floor(Math.random() * 8))
+    // })
 
 
     return map
@@ -88,6 +88,8 @@ export async function main() {
 
     const trainSkips = 1 //Magnitude of training slowdown
     let skips = 0
+
+    OwnershipController.updateMapColor()
     //Train divisions ever second
     setInterval(() => {
         skips++

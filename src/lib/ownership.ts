@@ -1,25 +1,27 @@
 import { getMapKeys } from "./country-data"
 import { map } from "./bootstrap";
 import { PlayersController } from "./player";
+import { FirebaseMap } from "./firebaseMap";
 
 export let OwnershipController = {
-    ownershipMap: new Map<string, number>(),
+    ownershipMap: new FirebaseMap<number>("ownership", parseInt(localStorage.getItem("currentGame")!)),
 
     updateMapColor() {
         let colormap = ""
-        OwnershipController.ownershipMap.forEach((owner, country) => {
+        OwnershipController.ownershipMap.map((owner, country) => {
             colormap += `"${country}": "#${PlayersController.colors[owner]}",`
-        })
-
-        ;(map as any).update(JSON.parse(`{${colormap.slice(0, -1)}}`))
+            console.log(country, owner)
+        }).then(
+            () => (map as any).update(JSON.parse(`{${colormap.slice(0, -1)}}`))
+        )
     },
 
     ownerOf(cid: string) {
         return this.ownershipMap.get(cid)!
     },
 
-    giveOwnership(cid: string, player: number) {
-        OwnershipController.ownershipMap.set(cid, player)
+    async giveOwnership(cid: string, player: number) {
+        await OwnershipController.ownershipMap.set(cid, player)
         try {
             OwnershipController.updateMapColor()
         } catch(e) {

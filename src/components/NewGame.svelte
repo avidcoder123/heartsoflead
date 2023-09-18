@@ -34,7 +34,7 @@
                     / 1000
                 )
 
-                let randomizer = Math.floor(Math.random() * 8)
+                let randomizer = Math.floor(Math.random() * maxPlayers)
 
                 Promise.all([
                     set(ref(db, `games/${id}/data/reserveArmies/${key}`), armies),

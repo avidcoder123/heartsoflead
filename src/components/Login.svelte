@@ -26,6 +26,7 @@
             let player = (await get(child(ref(db), `/games/${id}/players/${playerID + 1}`))).val()
             if(player.password == password) {
                 localStorage.setItem(id.toString(), (playerID + 1).toString())
+                localStorage.setItem("currentGame", id.toString())
                 window.location.href = `/game?id=${id}`
             }
         } else {
@@ -35,6 +36,7 @@
                 password
             })
             localStorage.setItem(id.toString(), (playerID + 1).toString())
+            localStorage.setItem("currentGame", id.toString())
             window.location.href = `/game?id=${id}`
         }
     }
