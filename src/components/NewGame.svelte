@@ -25,7 +25,7 @@
             }
         })
         .then(() => {
-            getMapKeys().map((key, idx) => {
+            Promise.all(getMapKeys().map((key, idx) => {
                 let population = getMapData(key).population
                 let armies = Math.floor(
                     population *
@@ -36,20 +36,20 @@
 
                 let randomizer = Math.floor(Math.random() * maxPlayers)
 
-                Promise.all([
+                return Promise.all([
                     set(ref(db, `games/${id}/data/reserveArmies/${key}`), armies),
                     set(ref(db, `games/${id}/data/population/${key}`), population),
                     set(ref(db, `games/${id}/data/population/${key}`), increment(-armies * 1000)),
                     set(ref(db, `games/${id}/data/returnQueue/${key}`), 0),
                     set(ref(db, `games/${id}/data/ownership/${key}`), ((idx+randomizer)%maxPlayers)+1)
-                ]).then(()=>null)
+                ])
 
                 // MilitaryController.reserveArmies.set(key, armies)
                 // PopulationController.decreasePopulation(key, armies * 1000)
                 // MilitaryController.activeArmies.set(key, new Map())
                 // MilitaryController.maneuverQueue.set(key, new Map())
                 // MilitaryController.returnQueue.set(key, 0)
-            })
+            }))
         })
         .then(() => window.location.href = `login/?id=${id}`)
     }
