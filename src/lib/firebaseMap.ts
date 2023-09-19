@@ -6,7 +6,7 @@ export class FirebaseMap <T> {
     public path = ""
 
     constructor(path: string, gameid: number) {
-        this.path = `/game/${gameid}/data/${path}/`
+        this.path = `/games/${gameid}/data/${path}/`
     }
 
     async get(key: string) {
@@ -35,7 +35,7 @@ export class FirebaseDoubleMap <T> {
     public path = ""
 
     constructor(path: string, gameid: number) {
-        this.path = `/game/${gameid}/data/${path}/`
+        this.path = `/games/${gameid}/data/${path}/`
     }
 
     async get(key1: string, key2: string) {
