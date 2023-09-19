@@ -9,8 +9,8 @@ export let OwnershipController = {
     updateMapColor() {
         let colormap = ""
         OwnershipController.ownershipMap.map((owner, country) => {
-            colormap += `"${country}": "#${PlayersController.colors[owner]}",`
-            console.log(country, owner)
+            colormap += `"${country}": "#${PlayersController.colors[owner-1]}",`
+            console.log(country, owner-1)
         }).then(
             () => (map as any).update(JSON.parse(`{${colormap.slice(0, -1)}}`))
         )
