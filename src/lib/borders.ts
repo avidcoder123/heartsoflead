@@ -80,7 +80,7 @@ export const mapBorders = {
   "IL": ["EG", "PS", "LB", "SY", "JO"],
   "IN": ["LK", "MM", "BD", "BT", "CN", "NP", "PK"],
   "IQ": ["IR", "TR", "SY", "JO", "SA", "KW"],
-  "IR": ["TM", "AF", "PK", "AE", "QA", "BH", "AZ"],
+  "IR": ["TM", "AF", "PK", "AE", "QA", "BH", "AZ", "IQ"],
   "IS": ["GL", "GB", "IE"],
   "IT": ["FR", "CH", "AT", "SI", "HR", "AL"],
   "JM": ["HT", "CU"],
