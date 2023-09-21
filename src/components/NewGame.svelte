@@ -24,8 +24,8 @@
                 })
             }
         })
-        .then(() => {
-            Promise.all(getMapKeys().map((key, idx) => {
+        .then(async () => {
+            await Promise.all(getMapKeys().map((key, idx) => {
                 let population = getMapData(key).population
                 let armies = Math.floor(
                     population *
@@ -49,6 +49,7 @@
                 // MilitaryController.activeArmies.set(key, new Map())
                 // MilitaryController.maneuverQueue.set(key, new Map())
                 // MilitaryController.returnQueue.set(key, 0)
+                
             }))
         })
         .then(() => window.location.href = `login/?id=${id}`)
