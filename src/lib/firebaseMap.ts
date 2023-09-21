@@ -32,13 +32,14 @@ import { K } from "../../dist/_astro/firebase.2db194f0"
 //     }
 // }
 
-export function FirebaseMap<K,V>(gameid: string, path: string): Map<K, V> {
+export function FirebaseMap<K,V>(gameid: string, path: string, callback?: () => void): Map<K, V> {
     let map = new Map<K, V>()
     onValue(ref(db, `game/${gameid}/${path}`), x => {
         let val = x.val()
         for(let key in val) {
             map.set(key as K, val[key])
         }
+        if(callback) callback()
     })
     return map
 }
