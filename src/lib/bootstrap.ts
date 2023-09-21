@@ -60,7 +60,7 @@ export async function main() {
     if (!id) {
         window.location.href = ""
     }
-    let gameData = (await get(child(ref(db), `games/${id}/metadata`))).val()
+    let gameData = (await get(child(ref(db), `game/${id}/metadata`))).val()
     
     let tickSpeed = ({
         "slow": 50,

@@ -7,7 +7,7 @@
     let numPlayers = 0
     let playersList: any[] = []
 
-    get(child(ref(db), `games/${id}/players`))
+    get(child(ref(db), `game/${id}/players`))
     .then(snap => snap.val())
     .then(val => {
         numPlayers = val.length - 1
@@ -23,14 +23,14 @@
 
     async function login() {
         if(claimedList[playerID]) {
-            let player = (await get(child(ref(db), `/games/${id}/players/${playerID + 1}`))).val()
+            let player = (await get(child(ref(db), `/game/${id}/players/${playerID + 1}`))).val()
             if(player.password == password) {
                 localStorage.setItem(id.toString(), (playerID + 1).toString())
                 localStorage.setItem("currentGame", id.toString())
                 window.location.href = `/game?id=${id}`
             }
         } else {
-            await set(ref(db, `/games/${id}/players/${playerID + 1}`), {
+            await set(ref(db, `/game/${id}/players/${playerID + 1}`), {
                 claimed: true,
                 username,
                 password

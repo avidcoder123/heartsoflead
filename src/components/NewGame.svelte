@@ -12,14 +12,14 @@
 
         let id = Date.now()
 
-        set(ref(db, `games/${id}/metadata`), {
+        set(ref(db, `game/${id}/metadata`), {
             name,
             players: maxPlayers,
             speed: speed
         })
         .then(() => {
             for(let i = 1; i <= maxPlayers; i++) {
-                set(ref(db, `games/${id}/players/${i}`), {
+                set(ref(db, `game/${id}/players/${i}`), {
                     claimed: false
                 })
             }
@@ -37,11 +37,11 @@
                 let randomizer = Math.floor(Math.random() * maxPlayers)
 
                 return Promise.all([
-                    set(ref(db, `games/${id}/data/reserveArmies/${key}`), armies),
-                    set(ref(db, `games/${id}/data/population/${key}`), population),
-                    set(ref(db, `games/${id}/data/population/${key}`), increment(-armies * 1000)),
-                    set(ref(db, `games/${id}/data/returnQueue/${key}`), 0),
-                    set(ref(db, `games/${id}/data/ownership/${key}`), ((idx+randomizer)%maxPlayers)+1)
+                    set(ref(db, `game/${id}/data/reserveArmies/${key}`), armies),
+                    set(ref(db, `game/${id}/data/population/${key}`), population),
+                    set(ref(db, `game/${id}/data/population/${key}`), increment(-armies * 1000)),
+                    set(ref(db, `game/${id}/data/returnQueue/${key}`), 0),
+                    set(ref(db, `game/${id}/data/ownership/${key}`), ((idx+randomizer)%maxPlayers)+1)
                 ])
 
                 // MilitaryController.reserveArmies.set(key, armies)

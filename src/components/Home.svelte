@@ -2,7 +2,7 @@
     import { child, get, ref } from "firebase/database";
     import { db } from "../lib/firebase";
 
-    let _games = get(child(ref(db), "games")).then(v => v.val())
+    let _games = get(child(ref(db), "game")).then(v => v.val())
 
 </script>
 
