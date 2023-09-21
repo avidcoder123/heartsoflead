@@ -41,6 +41,12 @@ export function FirebaseMap<K,V>(gameid: string, path: string, callback?: () => 
         }
         if(callback) callback()
     })
+
+    map.set = (key: K, value: V) => {
+        map.set(key, value)
+        //TODO: sync set with firebase
+        return map
+    }
     return map
 }
 

@@ -1,4 +1,3 @@
-import { getMapKeys } from "./country-data"
 import { map } from "./bootstrap";
 import { PlayersController } from "./player";
 import { FirebaseMap } from "./firebaseMap";
