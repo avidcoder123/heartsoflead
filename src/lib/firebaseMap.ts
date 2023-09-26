@@ -32,7 +32,7 @@ import { mapBorders } from "./borders"
 //     }
 // }
 
-export class FirebaseMap<K, V> extends Map<K, V> {
+export class FirebaseMap<V> extends Map<string, V> {
 
     gameid: string
     path: string
@@ -45,13 +45,13 @@ export class FirebaseMap<K, V> extends Map<K, V> {
         onValue(ref(db, `game/${this.gameid}/${path}`), x => {
             let val = x.val()
             for(let key in val) {
-                super.set(key as K, val[key])
+                super.set(key, val[key])
             }
             if(callback) callback()
         })
     }
 
-    set(key: K, value: V): typeof this {
+    set(key: string, value: V): typeof this {
         super.set(key, value)
         set(ref(db, `game/${this.gameid}/${this.path}/${key}`), value)
         return this
@@ -59,12 +59,12 @@ export class FirebaseMap<K, V> extends Map<K, V> {
 }
 
 
-export class FirebaseDoubleMap<K, V> extends Map<K, Map<K, V>> {
+export class FirebaseDoubleMap<V> extends Map<string, FirebaseMap<V>> {
     constructor(path: string, callback?: () => void) {
         super()
         
         for(let key in mapBorders) {
-            this.set(key, new FirebaseMap)
+            this.set(key, new FirebaseMap<V>(`${path}/${key}`, callback))
         }
     }
 }
