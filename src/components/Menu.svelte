@@ -86,6 +86,7 @@
     Active divisions: {actDivs}
 </h1>
 <div class="flex flex-row gap-5">
+    {PlayersController.currentPlayer}
     {#if currentPage == Page.Home}
         {#if OwnershipController.ownerOf(countryID) == PlayersController.currentPlayer}
             <button class="text-white text-lg bg-cyan-600 rounded-lg w-36 h-16" on:click={() => currentPage=Page.Military}>

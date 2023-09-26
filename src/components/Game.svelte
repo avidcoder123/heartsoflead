@@ -35,8 +35,8 @@
 <div class="h-[80%] w-[20%] bg-slate-800 fixed top-0 right-0 z-30 p-10 flex flex-col">
     <span class="text-white text-xl mt-3 flex flex-row items-center gap-2">
         You are 
-        <div class="h-4 w-4 border-white border-2" style={`background-color:#${PlayersController.colors[PlayersController.currentPlayer]};`}></div>
-         {PlayersController.colorNames[PlayersController.currentPlayer]}
+        <div class="h-4 w-4 border-white border-2" style={`background-color:#${PlayersController.colors[PlayersController.currentPlayer - 1]};`}></div>
+         {PlayersController.colorNames[PlayersController.currentPlayer - 1]}
     </span>
     <button class="w-36 rounded-md bg-cyan-500 h-12 mt-10" on:click={() => tutorial = true}>Tutorial</button>
     <h1 class="text-white text-lg mt-auto mb-5">

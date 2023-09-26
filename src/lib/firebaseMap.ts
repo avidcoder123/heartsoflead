@@ -1,5 +1,6 @@
 import { child, get, onValue, ref, set } from "firebase/database"
 import { db } from "./firebase"
+import { mapBorders } from "./borders"
 
 //TODO: Make firebasemap simply sync map to firebase instead of replacing the entire object
 // export class FirebaseMap <T> {
@@ -58,19 +59,12 @@ export class FirebaseMap<K, V> extends Map<K, V> {
 }
 
 
-export class FirebaseDoubleMap <T> {
-    public path = ""
-
-    constructor(path: string, gameid: number) {
-        this.path = `/game/${gameid}/data/${path}/`
-    }
-
-    async get(key1: string, key2: string) {
-        const x = await get(child(ref(db), this.path + `${key1}/${key2}`))
-        return x.val()
-    }
-
-    async set(key1: string, key2: string, value: T) {
-        await set(ref(db, this.path + `${key1}/${key2}`), value)
+export class FirebaseDoubleMap<K, V> extends Map<K, Map<K, V>> {
+    constructor(path: string, callback?: () => void) {
+        super()
+        
+        for(let key in mapBorders) {
+            this.set(key, new FirebaseMap)
+        }
     }
 }
