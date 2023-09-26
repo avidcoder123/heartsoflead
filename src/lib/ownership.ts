@@ -3,7 +3,7 @@ import { PlayersController } from "./player";
 import { FirebaseMap } from "./firebaseMap";
 
 export let OwnershipController = {
-    ownershipMap: FirebaseMap<string, number>(localStorage.getItem("currentGame")!, "data/ownership", () => {
+    ownershipMap: new FirebaseMap<string, number>("data/ownership", () => {
         OwnershipController.updateMapColor()
     }),
 

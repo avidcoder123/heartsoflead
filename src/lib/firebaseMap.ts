@@ -1,6 +1,5 @@
 import { child, get, onValue, ref, set } from "firebase/database"
 import { db } from "./firebase"
-import { K } from "../../dist/_astro/firebase.2db194f0"
 
 //TODO: Make firebasemap simply sync map to firebase instead of replacing the entire object
 // export class FirebaseMap <T> {
@@ -32,23 +31,32 @@ import { K } from "../../dist/_astro/firebase.2db194f0"
 //     }
 // }
 
-export function FirebaseMap<K,V>(gameid: string, path: string, callback?: () => void): Map<K, V> {
-    let map = new Map<K, V>()
-    onValue(ref(db, `game/${gameid}/${path}`), x => {
-        let val = x.val()
-        for(let key in val) {
-            map.set(key as K, val[key])
-        }
-        if(callback) callback()
-    })
+export class FirebaseMap<K, V> extends Map<K, V> {
 
-    map.set = (key: K, value: V) => {
-        map.set(key, value)
-        //TODO: sync set with firebase
-        return map
+    gameid: string
+    path: string
+
+    constructor(path: string, callback?: () => void) {
+        super()
+        this.gameid = localStorage.getItem("currentGame")!
+        this.path = path
+
+        onValue(ref(db, `game/${this.gameid}/${path}`), x => {
+            let val = x.val()
+            for(let key in val) {
+                super.set(key as K, val[key])
+            }
+            if(callback) callback()
+        })
     }
-    return map
+
+    set(key: K, value: V): typeof this {
+        super.set(key, value)
+        set(ref(db, `game/${this.gameid}/${this.path}/${key}`), value)
+        return this
+    }
 }
+
 
 export class FirebaseDoubleMap <T> {
     public path = ""
