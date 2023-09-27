@@ -1,7 +1,8 @@
 import { getMapKeys, mapData } from "../lib/country-data";
+import { FirebaseMap } from "./firebaseMap";
 
 export let PopulationController = {
-    population: new Map<string, number>(),
+    population: new FirebaseMap<number>("data/population"),
 
     getPopulation(cid: string) {
         return PopulationController.population.get(cid)!

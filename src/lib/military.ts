@@ -1,18 +1,18 @@
 import { getMapData, getMapKeys } from "./country-data"
-import { FirebaseMap } from "./firebaseMap"
+import { FirebaseDoubleMap, FirebaseMap } from "./firebaseMap"
 import { OwnershipController } from "./ownership"
 import { PopulationController } from "./population"
 export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
     reserveArmies: new FirebaseMap<number>("data/reserveArmies"),
     //How many armies each country has in each country
-    activeArmies: new Map<string, Map<string, number>>(),
+    activeArmies: new FirebaseDoubleMap<number>("data/activeArmies"),
     //How many armies are in the process of returning home after a battle
     returnQueue: new FirebaseMap<number>("data/returnQueue"),
     //The queued divisions which still need to be trained
     trainingQueue: new FirebaseMap<number>("data/trainingQueue"),
     //Maneuvering queue
-    maneuverQueue: new Map<string, Map<string, number>>(),
+    maneuverQueue: new FirebaseDoubleMap<number>("data/maneuverQueue"),
 
     divisionSize: 1000, //1000 people in a single division
 

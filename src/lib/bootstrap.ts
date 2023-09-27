@@ -71,20 +71,20 @@ export async function main() {
     map = await bootstrap()
     console.log("Bootstrapped map")
 
-    getMapKeys().map(key => {
-        let population = getMapData(key).population
-        let armies = Math.floor(
-            population *
-            1 /  
-            (30 * (Math.log(population) / Math.log(10)))
-             / 1000
-        )
-        MilitaryController.reserveArmies.set(key, armies)
-        PopulationController.decreasePopulation(key, armies * 1000)
-        MilitaryController.activeArmies.set(key, new Map())
-        MilitaryController.maneuverQueue.set(key, new Map())
-        MilitaryController.returnQueue.set(key, 0)
-    })
+    // getMapKeys().map(key => {
+    //     let population = getMapData(key).population
+    //     let armies = Math.floor(
+    //         population *
+    //         1 /  
+    //         (30 * (Math.log(population) / Math.log(10)))
+    //          / 1000
+    //     )
+    //     MilitaryController.reserveArmies.set(key, armies)
+    //     PopulationController.decreasePopulation(key, armies * 1000)
+    //     MilitaryController.activeArmies.set(key, new Map())
+    //     MilitaryController.maneuverQueue.set(key, new Map())
+    //     MilitaryController.returnQueue.set(key, 0)
+    // })
 
     const trainSkips = 1 //Magnitude of training slowdown
     let skips = 0
