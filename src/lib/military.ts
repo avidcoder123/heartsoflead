@@ -1,6 +1,7 @@
 import { getMapData, getMapKeys } from "./country-data"
 import { FirebaseDoubleMap, FirebaseMap } from "./firebaseMap"
 import { OwnershipController } from "./ownership"
+import { PlayersController } from "./player"
 import { PopulationController } from "./population"
 export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
@@ -57,7 +58,7 @@ export let MilitaryController = {
                     let currentReserve = MilitaryController.reserveArmies.get(attacker)!
                     MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
                     //Give ownership of country to user 0
-                    OwnershipController.giveOwnership(defender, 0)
+                    OwnershipController.giveOwnership(defender, PlayersController.currentPlayer)
                     MilitaryController.returnQueue.set(attacker, armies)
                     return
                 }
