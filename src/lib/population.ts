@@ -1,5 +1,7 @@
+import { ref, runTransaction } from "firebase/database";
 import { getMapKeys, mapData } from "../lib/country-data";
 import { FirebaseMap } from "./firebaseMap";
+import { db } from "./firebase";
 
 export let PopulationController = {
     population: new FirebaseMap<number>("data/population"),
@@ -9,13 +11,15 @@ export let PopulationController = {
     },
 
     addPopulation(cid: string, amount: number) {
-        let current = PopulationController.population.get(cid)!
-        PopulationController.population.set(cid, current + Math.floor(amount))
+        runTransaction(ref(db), () => {
+            let current = PopulationController.population.get(cid)!
+            PopulationController.population.set(cid, current + Math.floor(amount))  
+        })
     },
 
     decreasePopulation: (cid: string, amount: number) => PopulationController.addPopulation(cid, -amount)
 }
 
-for(let cid of getMapKeys()) {
-    PopulationController.population.set(cid, mapData[cid as keyof typeof mapData].population)
-}
+// for(let cid of getMapKeys()) {
+//     PopulationController.population.set(cid, mapData[cid as keyof typeof mapData].population)
+// }
