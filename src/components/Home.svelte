@@ -3,6 +3,8 @@
     import { db } from "../lib/firebase";
 
     let _games = get(child(ref(db), "game")).then(v => v.val())
+    _games.then(console.log)
+
 
 </script>
 

@@ -1,8 +1,10 @@
+import { ref, runTransaction } from "firebase/database"
 import { getMapData, getMapKeys } from "./country-data"
 import { FirebaseDoubleMap, FirebaseMap } from "./firebaseMap"
 import { OwnershipController } from "./ownership"
 import { PlayersController } from "./player"
 import { PopulationController } from "./population"
+import { db } from "./firebase"
 export let MilitaryController = {
     //Statistics of how many reserve divisions each country has
     reserveArmies: new FirebaseMap<number>("data/reserveArmies"),
@@ -29,12 +31,14 @@ export let MilitaryController = {
     },
 
     deployDivisions(attacker: string, defendant: string, divisions: number) {
-        let currentReserve = MilitaryController.reserveArmies.get(attacker) || 0
-        MilitaryController.reserveArmies.set(attacker, currentReserve - divisions)
-        let currentActive = MilitaryController.activeArmies.get(attacker)!.get(defendant) || 0
-        MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions + currentActive)
+        runTransaction(ref(db), () => {
+            let currentReserve = MilitaryController.reserveArmies.get(attacker) || 0
+            MilitaryController.reserveArmies.set(attacker, currentReserve - divisions)
+            let currentActive = MilitaryController.activeArmies.get(attacker)!.get(defendant) || 0
+            MilitaryController.activeArmies.get(attacker)!.set(defendant, divisions + currentActive)
+        })
     },
-
+    //TODO: Transaction everything
     maneuverDivisions(from: string, to: string, divisions: number) {
         let currentManeuver = MilitaryController.maneuverQueue.get(from)!.get(to) || 0
         let currentFromArmies = MilitaryController.reserveArmies.get(from)!
