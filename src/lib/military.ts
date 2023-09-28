@@ -56,9 +56,9 @@ export let MilitaryController = {
     },
 
     militaryTick: () => {
-        runTransaction(ref(db), () => {
-            MilitaryController.activeArmies.forEach((i, attacker) => {
-                i.forEach((armies, defender) => {
+        MilitaryController.activeArmies.forEach((i, attacker) => {
+            i.forEach((armies, defender) => {
+                runTransaction(ref(db), () => {
                     let currentAttack = armies
                     let currentDefend = MilitaryController.getDivisions(defender)
     
@@ -74,7 +74,6 @@ export let MilitaryController = {
     
                     MilitaryController.activeArmies.get(attacker)!.set(defender, Math.max(currentAttack - 1, 0))
                     MilitaryController.reserveArmies.set(defender, Math.max(currentDefend - 1,0))
-    
                 })
             })
         })
