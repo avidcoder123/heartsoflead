@@ -78,7 +78,7 @@ export let MilitaryController = {
             })
         })
     },
-
+    
     maneuverTick: () => {
         runTransaction(ref(db), () => {
             MilitaryController.maneuverQueue.forEach((i, from) => {
@@ -106,6 +106,7 @@ export let MilitaryController = {
     },
 
     //Process to run every second to train divisions
+    //TODO: Fix bug where defender reserve divions do not update
     trainTick: () => {
         runTransaction(ref(db), () => {
             MilitaryController.trainingQueue.forEach((value, cid) => {
