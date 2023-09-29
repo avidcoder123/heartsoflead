@@ -37,6 +37,8 @@ export class FirebaseMap<V> extends Map<string, V> {
     gameid: string
     path: string
 
+    queue: {path: string, increment?: number, set?: any}[] = []
+
     constructor(path: string, callback?: () => void) {
         super()
         this.gameid = localStorage.getItem("currentGame")!
@@ -55,6 +57,13 @@ export class FirebaseMap<V> extends Map<string, V> {
         super.set(key, value)
         set(ref(db, `game/${this.gameid}/${this.path}/${key}`), value)
         return this
+    }
+
+    increment(key: string, amount: number) {
+        let current = super.get(key)! as number
+        //@ts-ignore
+        super.set(key, current + amount)
+
     }
 }
 
