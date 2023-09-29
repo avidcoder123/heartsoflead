@@ -33,6 +33,7 @@ export let MilitaryController = {
         MilitaryController.reserveArmies.increment(attacker, -divisions)
         MilitaryController.activeArmies.get(attacker)!.increment(defendant, divisions)
     },
+    
     maneuverDivisions(from: string, to: string, divisions: number) {
         MilitaryController.maneuverQueue.get(from)!.increment(to, divisions)
         MilitaryController.reserveArmies.increment(from, -divisions)
@@ -49,9 +50,7 @@ export let MilitaryController = {
             i.forEach((armies, defender) => {
                 let currentAttack = armies
                 let currentDefend = MilitaryController.getDivisions(defender)
-
                 if(currentDefend <= 0 && armies > 0) {
-                    let currentReserve = MilitaryController.reserveArmies.get(attacker)!
                     MilitaryController.activeArmies.get(attacker)!.set(defender, 0)
                     OwnershipController.giveOwnership(defender, PlayersController.currentPlayer)
                     MilitaryController.returnQueue.set(attacker, armies)
@@ -68,7 +67,6 @@ export let MilitaryController = {
     maneuverTick: () => {
         MilitaryController.maneuverQueue.forEach((i, from) => {
             i.forEach((armies, to) => {
-                console.log(armies)
                 if(armies <= 0) return
 
                 MilitaryController.maneuverQueue.get(from)!.increment(to, -1)

@@ -1,13 +1,13 @@
 <script lang="ts">
     import Modal from "./Modal.svelte";
-    import { MilitaryController } from "../lib/military";
-    import { PopulationController } from "../lib/population"
+    import { MilitaryController } from "../lib/militarycontroller";
+    import { PopulationController } from "../lib/populationcontroller"
     import { getMapBorders } from "../lib/borders";
     import { getMapData } from "../lib/country-data";
     import { formatNumber } from "../lib/util";
     import { data } from "../lib/bootstrap";
-    import { OwnershipController } from "../lib/ownership";
-    import { PlayersController } from "../lib/player";
+    import { OwnershipController } from "../lib/ownershipcontroller";
+    import { PlayersController } from "../lib/playercontroller";
 
     export let countryID = ""
     enum Page {

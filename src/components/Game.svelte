@@ -4,7 +4,7 @@
     import { main } from "../lib/bootstrap"
     import { mapData } from "../lib/country-data";
     import { newBorders } from "../lib/newborders";
-    import { PlayersController } from "../lib/player";
+    import { PlayersController } from "../lib/playercontroller";
     import Menu from "./Menu.svelte";
     import Modal from "./Modal.svelte";
 

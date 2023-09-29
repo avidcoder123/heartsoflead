@@ -2,7 +2,7 @@
     //import "../lib/svg-world-map";
 
     import { main } from "../lib/bootstrap"
-    import { PlayersController } from "../lib/player";
+    import { PlayersController } from "../lib/playercontroller";
     import { newBorders } from "../lib/newborders";
     import { mapData } from "../lib/country-data";
     import { options } from "../lib/options";

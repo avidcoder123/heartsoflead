@@ -45,6 +45,13 @@ export class FirebaseMap<V> extends Map<string, V> {
         this.gameid = localStorage.getItem("currentGame")!
         this.path = path
 
+        get(child(ref(db), `game/${this.gameid}/${path}`)).then(x => {
+            let val = x.val()
+            for(let key in val) {
+                super.set(key, val[key])
+            }
+        })
+
         onValue(ref(db, `game/${this.gameid}/${path}`), x => {
             this.readQueue.push(x.key!)
         })
@@ -74,18 +81,23 @@ export class FirebaseMap<V> extends Map<string, V> {
     set(key: string, value: V): typeof this {
         super.set(key, value)
         this.writeQueue.push({
-            key: `game/${this.gameid}/${this.path}/${key}`,
+            key,
             set: value
         })
         return this
     }
 
     increment(key: string, amount: number) {
+        // console.log(this)
+        // console.log(key)
+        // console.trace()
+        //return
         let current = super.get(key)! as number
+        console.log(this)
         //@ts-ignore
         super.set(key, current + amount)
         this.writeQueue.push({
-            key: `game/${this.gameid}/${this.path}/${key}`,
+            key,
             increment: amount
         })
         return this
