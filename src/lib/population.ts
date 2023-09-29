@@ -11,10 +11,7 @@ export let PopulationController = {
     },
 
     addPopulation(cid: string, amount: number) {
-        runTransaction(ref(db), () => {
-            let current = PopulationController.population.get(cid)!
-            PopulationController.population.set(cid, current + Math.floor(amount))  
-        })
+        PopulationController.population.increment(cid, Math.floor(amount))
     },
 
     decreasePopulation: (cid: string, amount: number) => PopulationController.addPopulation(cid, -amount)

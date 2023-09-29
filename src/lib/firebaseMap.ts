@@ -37,7 +37,7 @@ export class FirebaseMap<V> extends Map<string, V> {
     gameid: string
     path: string
 
-    writeQueue: {path: string, increment?: number, set?: any}[] = []
+    writeQueue: {key: string, increment?: number, set?: any}[] = []
     readQueue: string[] = []
 
     constructor(path: string, callback?: () => void) {
@@ -50,13 +50,20 @@ export class FirebaseMap<V> extends Map<string, V> {
         })
 
         setInterval(() => {
+            //Read all incoming reads
+            for(let read of this.readQueue) {
+                get(child(ref(db), `game/${this.gameid}/${this.path}/${read}`)).then(x => x.val())
+                .then(val => super.set(read, val))
+            }
+
+            this.readQueue = []
             //Write all write queue
             for(let write of this.writeQueue) {
                 if(write.set) {
-                    set(ref(db, `game/${this.gameid}/${this.path}/${write.path}`), write.set)
+                    set(ref(db, `game/${this.gameid}/${this.path}/${write.key}`), write.set)
                 }
                 else if(write.increment) {
-                    set(ref(db, `game/${this.gameid}/${this.path}/${write.path}`), increment(write.increment))
+                    set(ref(db, `game/${this.gameid}/${this.path}/${write.key}`), increment(write.increment))
                 }
             }
 
@@ -66,9 +73,8 @@ export class FirebaseMap<V> extends Map<string, V> {
 
     set(key: string, value: V): typeof this {
         super.set(key, value)
-        set(ref(db, `game/${this.gameid}/${this.path}/${key}`), value)
         this.writeQueue.push({
-            path: `game/${this.gameid}/${this.path}/${key}`,
+            key: `game/${this.gameid}/${this.path}/${key}`,
             set: value
         })
         return this
@@ -79,7 +85,7 @@ export class FirebaseMap<V> extends Map<string, V> {
         //@ts-ignore
         super.set(key, current + amount)
         this.writeQueue.push({
-            path: `game/${this.gameid}/${this.path}/${key}`,
+            key: `game/${this.gameid}/${this.path}/${key}`,
             increment: amount
         })
         return this
