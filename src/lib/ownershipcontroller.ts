@@ -1,5 +1,5 @@
 import { map } from "./bootstrap";
-import { PlayersController } from "./player";
+import { PlayersController } from "./playercontroller";
 import { FirebaseMap } from "./firebaseMap";
 
 export let OwnershipController = {

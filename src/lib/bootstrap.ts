@@ -1,9 +1,9 @@
 import { options } from "../lib/options";
 import  {getMapData, getMapKeys, mapData } from "../lib/country-data"
 import { mapBorders } from "../lib/borders"
-import { OwnershipController } from "./ownership";
-import { MilitaryController } from "./military";
-import { PopulationController } from "./population";
+import { OwnershipController } from "./ownershipcontroller";
+import { MilitaryController } from "./militarycontroller";
+import { PopulationController } from "./populationcontroller";
 import { child, get, ref } from "firebase/database";
 import { db } from "./firebase";
 

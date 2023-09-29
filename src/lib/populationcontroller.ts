@@ -1,5 +1,5 @@
 import { ref, runTransaction } from "firebase/database";
-import { getMapKeys, mapData } from "../lib/country-data";
+import { getMapKeys, mapData } from "./country-data";
 import { FirebaseMap } from "./firebaseMap";
 import { db } from "./firebase";
 
