@@ -1,4 +1,4 @@
-import { child, get, onValue, ref, set } from "firebase/database"
+import { child, get, increment, onValue, ref, set } from "firebase/database"
 import { db } from "./firebase"
 import { mapBorders } from "./borders"
 
@@ -37,7 +37,8 @@ export class FirebaseMap<V> extends Map<string, V> {
     gameid: string
     path: string
 
-    queue: {path: string, increment?: number, set?: any}[] = []
+    writeQueue: {path: string, increment?: number, set?: any}[] = []
+    readQueue: string[] = []
 
     constructor(path: string, callback?: () => void) {
         super()
@@ -45,17 +46,31 @@ export class FirebaseMap<V> extends Map<string, V> {
         this.path = path
 
         onValue(ref(db, `game/${this.gameid}/${path}`), x => {
-            let val = x.val()
-            for(let key in val) {
-                super.set(key, val[key])
-            }
-            if(callback) callback()
+            this.readQueue.push(x.key!)
         })
+
+        setInterval(() => {
+            //Write all write queue
+            for(let write of this.writeQueue) {
+                if(write.set) {
+                    set(ref(db, `game/${this.gameid}/${this.path}/${write.path}`), write.set)
+                }
+                else if(write.increment) {
+                    set(ref(db, `game/${this.gameid}/${this.path}/${write.path}`), increment(write.increment))
+                }
+            }
+
+            this.writeQueue = []
+        },100)
     }
 
     set(key: string, value: V): typeof this {
         super.set(key, value)
         set(ref(db, `game/${this.gameid}/${this.path}/${key}`), value)
+        this.writeQueue.push({
+            path: `game/${this.gameid}/${this.path}/${key}`,
+            set: value
+        })
         return this
     }
 
@@ -63,7 +78,11 @@ export class FirebaseMap<V> extends Map<string, V> {
         let current = super.get(key)! as number
         //@ts-ignore
         super.set(key, current + amount)
-
+        this.writeQueue.push({
+            path: `game/${this.gameid}/${this.path}/${key}`,
+            increment: amount
+        })
+        return this
     }
 }
 
