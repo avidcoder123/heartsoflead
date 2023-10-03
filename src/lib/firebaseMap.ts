@@ -80,6 +80,7 @@ export class FirebaseMap<V> extends Map<string, V> {
 
     set(key: string, value: V): typeof this {
         super.set(key, value)
+        console.log(this.path, key, value)
         this.writeQueue.push({
             key,
             set: value
@@ -93,7 +94,8 @@ export class FirebaseMap<V> extends Map<string, V> {
         // console.trace()
         //return
         let current = super.get(key)! as number
-        console.log(this)
+        console.log(this.path, key, amount)
+        //console.trace()
         //@ts-ignore
         super.set(key, current + amount)
         this.writeQueue.push({

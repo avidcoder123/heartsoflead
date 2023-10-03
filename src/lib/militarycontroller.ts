@@ -48,6 +48,7 @@ export let MilitaryController = {
     militaryTick: () => {
         MilitaryController.activeArmies.forEach((i, attacker) => {
             i.forEach((armies, defender) => {
+                console.log(armies)
                 let currentAttack = armies
                 let currentDefend = MilitaryController.getDivisions(defender)
                 if(currentDefend <= 0 && armies > 0) {
