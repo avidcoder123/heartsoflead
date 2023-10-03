@@ -57,10 +57,11 @@ async function bootstrap() {
 export async function main() {
     let id = parseInt((new URLSearchParams(window.location.search)).get("id")!)
 
-    if (!id) {
+
+    let gameData = (await get(child(ref(db), `game/${id}/metadata`))).val()
+    if (!id || !gameData) {
         window.location.href = "/"
     }
-    let gameData = (await get(child(ref(db), `game/${id}/metadata`))).val()
     
     let tickSpeed = ({
         "slow": 50,
