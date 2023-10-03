@@ -41,7 +41,9 @@
                     set(ref(db, `game/${id}/data/population/${key}`), population),
                     set(ref(db, `game/${id}/data/population/${key}`), increment(-armies * 1000)),
                     set(ref(db, `game/${id}/data/returnQueue/${key}`), 0),
-                    set(ref(db, `game/${id}/data/ownership/${key}`), ((idx+randomizer)%maxPlayers)+1)
+                    set(ref(db, `game/${id}/data/ownership/${key}`), ((idx+randomizer)%maxPlayers)+1),
+                    Promise.all(getMapKeys().map(key2 => set(ref(db, `game/${id}/data/activeArmies/${key}/${key2}`), 0))),
+                    Promise.all(getMapKeys().map(key2 => set(ref(db, `game/${id}/data/maneuverQueue/${key}/${key2}`), 0)))
                 ])
 
                 // MilitaryController.reserveArmies.set(key, armies)
