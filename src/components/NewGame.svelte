@@ -35,7 +35,7 @@
                 )
 
                 let randomizer = Math.floor(Math.random() * maxPlayers)
-
+                //TODO: Make progress bar to show game creation loading
                 return Promise.all([
                     set(ref(db, `game/${id}/data/reserveArmies/${key}`), armies),
                     set(ref(db, `game/${id}/data/population/${key}`), population),
