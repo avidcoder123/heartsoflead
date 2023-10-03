@@ -58,7 +58,7 @@ export async function main() {
     let id = parseInt((new URLSearchParams(window.location.search)).get("id")!)
 
     if (!id) {
-        window.location.href = ""
+        window.location.href = "/"
     }
     let gameData = (await get(child(ref(db), `game/${id}/metadata`))).val()
     
